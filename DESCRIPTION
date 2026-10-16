@@ -10,7 +10,8 @@ Description: Provides reproducible pipelines that build analysis-ready
     demand by 'targets' pipelines bundled with the package, and cached via
     'tarchives'.
 License: MIT + file LICENSE
-URL: https://github.com/UchidaMizuki/locationchoicedatajp
+URL: https://github.com/UchidaMizuki/locationchoicedatajp,
+    https://uchidamizuki.github.io/locationchoicedatajp/
 BugReports: https://github.com/UchidaMizuki/locationchoicedatajp/issues
 Depends:
     R (>= 4.1.0)
