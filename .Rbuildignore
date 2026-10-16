@@ -2,3 +2,13 @@
 ^\.Rproj\.user$
 ^AGENTS\.md$
 ^\.claude$
+^LICENSE\.md$
+^README\.qmd$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.gitattributes$
+^[.]?air[.]toml$
+^\.vscode$
+^\.quarto$
+^\.github$

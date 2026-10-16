@@ -1,11 +1,22 @@
 Package: locationchoicedatajp
-Title: What the Package Does (One Line, Title Case)
+Title: Open Data for Location Choice Models in Japan
 Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+Authors@R:
+    person("Mizuki", "Uchida", , "uchidamizuki@vivaldi.net", role = c("aut", "cre"))
+Description: Provides reproducible pipelines that build analysis-ready
+    tables for estimating household and firm location choice models in
+    Japan from open data published by the national government. Data are
+    not bundled: they are downloaded from the primary sources and built on
+    demand by 'targets' pipelines bundled with the package, and cached via
+    'tarchives'.
+License: MIT + file LICENSE
+URL: https://github.com/UchidaMizuki/locationchoicedatajp
+BugReports: https://github.com/UchidaMizuki/locationchoicedatajp/issues
+Depends:
+    R (>= 4.1.0)
+Suggests:
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 8.0.0
