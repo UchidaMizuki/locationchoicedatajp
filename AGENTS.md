@@ -2,6 +2,19 @@
 
 <!-- Insert package-specific content here. use_tidy_agents() will preserve this section when updating the rest of the file. -->
 
+locationchoicedatajp builds analysis-ready tables for estimating household and firm location choice models in Japan from open data, built on tarchives. It is the data layer; estimation belongs in a separate package. See the roadmap in issue #1.
+
+- Keep the code simple: one small function per step, plain tibbles and `sf` objects, no tibble subclasses or hidden attributes.
+- Do not bundle data. Ship pipeline definitions in `inst/tarchives/`, one pipeline per source and vintage, and let tarchives build and cache the data.
+- Expose each table through `*_get()`, and declare it as a target through `*_target()` and `*_target_raw()`.
+- Reuse the data packages built on tarchives instead of downloading the same source again (for example National Land Numerical Information through ksjdata).
+- Every table records its source and terms of use.
+- Use consistent column names across tables (`year`, `origin`, `destination`, ...) and document every column with its unit.
+- Keep zones as published (codes with leading zeros, as character). Harmonization of municipality codes to a reference year is a separate shared step.
+- Keep published zeros (`0`) distinct from suppressed or blank cells (`NA`), and keep zero flows explicit.
+- Check every output (keys, ranges, totals against published figures).
+- Unit tests use fixture files and must not use the network. Tests that need an API key (for example `ESTAT_API_KEY`) skip without it.
+
 ## Package development
 
 ### Key commands
