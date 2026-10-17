@@ -12,3 +12,5 @@
 ^\.vscode$
 ^\.quarto$
 ^\.github$
+^ARCHITECTURE\.md$
+^data-raw$
