@@ -13,7 +13,7 @@ locationchoicedatajp builds analysis-ready tables for estimating household and f
 - Keep zones as published (codes with leading zeros, as character). Harmonization of municipality codes to a reference year is a separate shared step.
 - Keep published zeros (`0`) distinct from suppressed or blank cells (`NA`), and keep zero flows explicit.
 - Check every output (keys, ranges, totals against published figures).
-- Unit tests use fixture files and must not use the network. Tests that need an API key (for example `ESTAT_APP_ID`) skip without it.
+- Unit tests use fixture files and must not use the network. Tests that need an API key (for example `ESTAT_API_KEY`) skip without it.
 
 ## Package development
 
