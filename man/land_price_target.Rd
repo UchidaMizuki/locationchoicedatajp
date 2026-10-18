@@ -13,8 +13,11 @@ land_price_target_raw(name, year, ...)
 \item{name}{Name of the target: a symbol for \code{land_price_target()}, a string
 for \code{land_price_target_raw()}.}
 
-\item{year}{Reference years, from 2007 to the latest release. See
-\code{\link[=land_price_files]{land_price_files()}} for the available years.}
+\item{year}{Reference year, from 2007 to the latest release. See
+\code{\link[=land_price_files]{land_price_files()}} for the available years. To get several years,
+iterate over them, for example with \code{purrr::map()}: the coordinate
+reference system differs between releases, so bind them after making
+it the same.}
 
 \item{...}{Other arguments passed to \code{\link[targets:tar_target_raw]{targets::tar_target_raw()}}.}
 }
@@ -24,9 +27,9 @@ A target object.
 \description{
 \code{land_price_target()} and \code{land_price_target_raw()} declare a target of a
 'targets' pipeline whose value is \code{land_price_get(year)}. The target is
-rerun when \code{year}, the URLs of the files of those years, or the installed
+rerun when \code{year}, the URL of the file of that year, or the installed
 version of locationchoicedatajp change.
 }
 \examples{
-land_price_target(land_price, c(2010, 2015, 2020))
+land_price_target(land_price_2020, 2020)
 }

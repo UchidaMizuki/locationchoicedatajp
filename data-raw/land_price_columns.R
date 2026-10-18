@@ -8,7 +8,8 @@
 library(dplyr)
 
 land_price_find_columns <- function(file_name, year) {
-  data <- sf::st_drop_geometry(ksjdata::ksj_get(file_name, col_names = "raw"))
+  layer <- ksjdata::ksj_get(file_name, col_names = "raw")
+  data <- sf::st_drop_geometry(layer)
   # Columns with missing values never match.
   all_match <- function(x, pattern) {
     !anyNA(x) && all(stringr::str_detect(x, pattern))
@@ -29,20 +30,39 @@ land_price_find_columns <- function(file_name, year) {
   year_column <- names(data)[is_year][[1]]
   price <- names(data)[[match(year_column, names(data)) + 1]]
 
-  # The use is the first part of the number of the site: in the first column,
-  # unless the municipality is.
-  use <- if (city == "L01_001") "L01_002" else "L01_001"
-  stopifnot(is_code(data[[use]], "^0[0-9]{2}$"))
+  # The number of a site (標準地番号) is its use and serial number, after the
+  # municipality when the municipality is in the first column.
+  if (city == "L01_001") {
+    use <- "L01_002"
+    serial <- "L01_003"
+  } else {
+    use <- "L01_001"
+    serial <- "L01_002"
+  }
+  stopifnot(
+    is_code(data[[use]], "^0[0-9]{2}$"),
+    is_code(data[[serial]], "^[0-9]{3}$"),
+    !anyDuplicated(paste(data[[city]], data[[use]], data[[serial]]))
+  )
 
   price_values <- as.numeric(data[[price]])
   stopifnot(!anyNA(price_values), all(price_values > 0))
+
+  # Files without a `.prj` file are in the datum of the catalog (世界測地系),
+  # which is JGD2000 for these releases.
+  epsg <- sf::st_crs(layer)$epsg
+  if (is.na(sf::st_crs(layer))) {
+    epsg <- 4612L
+  }
 
   tibble::tibble(
     year = year,
     file_name = file_name,
     city_code = city,
     use_code = use,
+    site_number = serial,
     price = price,
+    epsg = epsg,
     n_points = nrow(data)
   )
 }

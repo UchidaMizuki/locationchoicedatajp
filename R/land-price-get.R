@@ -1,39 +1,49 @@
-#' Get land prices by municipality
+#' Get land prices
 #'
-#' Returns the official land prices (地価公示) of National Land Numerical
-#' Information summarised by municipality and use. The first call for a year
-#' downloads the file of that year's release (via ksjdata) and builds the
-#' table, which is then cached.
+#' Returns the sites of the official land prices (地価公示) of National Land
+#' Numerical Information in a year, one row per site, as published. The first
+#' call for a year downloads the file of that year's release (via ksjdata) and
+#' builds the table, which is then cached.
 #'
-#' Each year is taken from its own release, so a year covers every site that
-#' was surveyed in it, and its values do not change when a later release is
-#' published.
+#' The year is taken from its own release, so it covers every site that was
+#' surveyed in it, and its values do not change when a later release is
+#' published. The sites are not summarised: summarise them by municipality, by
+#' grid square, or by use as the analysis needs.
 #'
 #' The first time in a session, the terms of use are shown. Published or
 #' processed data must credit the source (National Land Numerical Information,
 #' 地価公示データ, by the Ministry of Land, Infrastructure, Transport and
 #' Tourism), and processed data must say that they were processed.
 #'
-#' @param year Reference years, from 2007 to the latest release. See
-#'   [land_price_files()] for the available years.
+#' @param year Reference year, from 2007 to the latest release. See
+#'   [land_price_files()] for the available years. To get several years,
+#'   iterate over them, for example with `purrr::map()`: the coordinate
+#'   reference system differs between releases, so bind them after making
+#'   it the same.
 #'
-#' @return A tibble with one row per year, municipality, and use:
+#' @return An `sf` tibble with one row per site:
 #'
 #'   * `year`: The reference year (integer). Prices are as of January 1.
 #'   * `release`: The year of the release the values are taken from (integer).
 #'     It is `year`.
-#'   * `city_code`: Five-digit municipality code of the site, as published for
-#'     that year. Designated cities are split into wards.
+#'   * `city_code`: Five-digit municipality code of the number of the site
+#'     (標準地番号), as published for that year. Designated cities are split
+#'     into wards.
 #'   * `use_code`: Three-digit use of the site (用途区分), as published. The
 #'     codes are those of the code list of the latest release (`000` 住宅地,
 #'     `003` 宅地見込地, `005` 商業地, `009` 工業地, `013` 林地) and, until
 #'     2012, also `007` and `010`, which are not used from 2013. The files of
 #'     2014 to 2016 have no sites of `003` or `013`. Compare uses across these
 #'     breaks with care.
-#'   * `n_points`: The number of sites.
-#'   * `price_median_jpy_per_m2`, `price_mean_jpy_per_m2`: The median and the
-#'     mean price of the sites, in yen per square meter. Sites are not
-#'     weighted.
+#'   * `site_number`: Three-digit serial number of the site within its
+#'     municipality and use, as published. `city_code`, `use_code`, and
+#'     `site_number` identify a site within a year; numbers can change between
+#'     years.
+#'   * `price_jpy_per_m2`: The price in yen per square meter.
+#'   * `geometry`: The point of the site, as published. Its coordinate
+#'     reference system is that of the release: JGD2000 (EPSG:4612) until 2023
+#'     and JGD2011 (EPSG:6668) from 2024. The files until 2017 have no `.prj`
+#'     file, and are set to JGD2000, the datum of the catalog.
 #'
 #' @source Ministry of Land, Infrastructure, Transport and Tourism, National
 #'   Land Numerical Information, 地価公示データ (L01):
@@ -44,17 +54,19 @@
 #' @seealso [land_price_target()] to declare the table as a target.
 #'
 #' @examplesIf interactive()
-#' land_price_get(2020)
+#' sites <- land_price_get(2020)
 #'
-#' # Several years
-#' land_price_get(c(2010, 2015, 2020))
+#' # Median price of residential sites by municipality
+#' sites |>
+#'   sf::st_drop_geometry() |>
+#'   dplyr::filter(use_code == "000") |>
+#'   dplyr::summarise(price = median(price_jpy_per_m2), .by = city_code)
 #'
 #' @export
 land_price_get <- function(year) {
   check_land_price_year(year)
   land_price_inform_terms()
-  data <- lapply(year, \(year) land_price_get_archive(year))
-  vctrs::vec_rbind(!!!data)
+  land_price_get_archive(year)
 }
 
 land_price_get_archive <- function(year) {
@@ -66,11 +78,12 @@ land_price_get_archive <- function(year) {
 }
 
 check_land_price_year <- function(year, call = rlang::caller_env()) {
+  check_number_whole(year, call = call)
   years <- land_price_files()$year
-  if (!is.numeric(year) || length(year) == 0 || !all(year %in% years)) {
+  if (!year %in% years) {
     cli::cli_abort(
       c(
-        "{.arg year} must be years with land prices.",
+        "{.arg year} must be a year with land prices.",
         i = "Available years: {min(years)} to {max(years)}."
       ),
       class = "locationchoicedatajp_error_year",
@@ -98,13 +111,14 @@ land_price_inform_terms <- function() {
 #' `land_price_files()` lists the file of each year of [land_price_get()]: the
 #' nationwide file of that year's release of 地価公示 (L01) in
 #' [ksjdata::ksj_available], with the columns that hold the municipality, the
-#' use, and the price, and the number of sites. The layout of the files
+#' use, the serial number, and the price, the EPSG code of its coordinate
+#' reference system, and the number of sites. The layout of the files
 #' changes between releases, so the columns are listed for each one. It is
 #' used by the bundled pipeline.
 #'
 #' @returns A tibble with one row per year: `year`, `file_name`, the columns
-#'   `city_code`, `use_code`, and `price`, `n_points`, and the `url` of the
-#'   file.
+#'   `city_code`, `use_code`, `site_number`, and `price`, `epsg`, `n_points`,
+#'   and the `url` of the file.
 #' @keywords internal
 #' @export
 #' @examples
@@ -118,7 +132,7 @@ land_price_files <- function() {
   )
   files <- utils::read.csv(
     path,
-    colClasses = c(year = "integer", n_points = "integer"),
+    colClasses = c(year = "integer", epsg = "integer", n_points = "integer"),
     encoding = "UTF-8"
   )
   ksj <- ksjdata::ksj_available

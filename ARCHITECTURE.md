@@ -14,6 +14,8 @@ Out of scope: estimation, non-public microdata, and redistributing data.
 - **Simple, readable code.** One small function per step. Plain tibbles; no tibble subclasses, no hidden columns or attributes.
 - **Reuse the data packages built on tarchives.** National Land Numerical Information is read through ksjdata, never downloaded again.
 - **Values as published.** Codes keep their leading zeros, published zeros stay distinct from blank cells (`NA`), and classifications are not harmonized silently.
+- **Observations, not summaries.** A getter returns the unit the source publishes (a site of 地価公示, a grid square of the census), with its location. Summaries over zones, such as the median price by grid square, are separate tables that name their statistic and their zone, and are never mixed with the observations. Values estimated for unobserved zones (interpolation) are separate tables too.
+- **Tidy tables.** One row per observation and one column per variable, as plain tibbles, or `sf` tibbles when the observation has a location.
 - **Checked before trusted.** Every pipeline checks what it reads (keys, ranges, counts), and fails rather than returning doubtful values.
 
 ## Time
@@ -42,10 +44,19 @@ Definitions also change between releases, and are kept as published: 地価公�
 
 ## Zones
 
-Tables are keyed by zones as published: municipality codes (`city_code`, five digits with the leading zero) as of the reference year, with the wards of designated cities as published.
+Residential location is modelled on grid squares (地域メッシュ), and workplaces and commuting flows on municipalities:
 
-- Harmonizing codes to the zones of one reference year (municipal mergers) is a separate, shared step, added once jpcity supports it. It will take the code and its reference date, so every table must keep `year` and the published code.
-- Grid squares (500 m or 1 km) are planned as a second zone system (issue #5).
+- **Grid squares** are the base zones. Their boundaries are fixed, so years compare without harmonization; they are nearly equal in size; they nest exactly (1 km, 500 m, 250 m); and the Population Census and the Economic Census publish statistics on them. The default size is 500 m, which is fine enough within cities without leaving most squares empty or suppressed (250 m).
+- **Municipalities** (`city_code`, five digits with the leading zero, as published for the reference year, with the wards of designated cities) are kept because commuting origin-destination flows are published only for them. A model of residence on grid squares is matched to these flows by summing its predictions over the squares of each municipality.
+- A crosswalk of grid squares to municipalities (with the share of each square in each municipality, as squares straddle boundaries) links the two. It is built for each year from the administrative boundaries of that year (N03 of National Land Numerical Information).
+- Tables with a location (`sf` points) are not given a grid square code: assigning points to squares is a shared step on the zones, so that every point source uses the same one.
+- Harmonizing municipality codes to the zones of one reference year (municipal mergers) is a separate, shared step, added once jpcity supports it. It will take the code and its reference date, so every table must keep `year` and the published code.
+
+Known limits of grid squares, and how they are handled:
+
+- Census grid statistics are compiled by assigning basic unit blocks (基本単位区) to squares, and the census publishes fewer cross-tabulations for squares than for small areas (町丁・字). Small areas may be added as a secondary zone system, linked through the grid squares, if a model needs those tables.
+- Small squares have small counts, which are suppressed or zero; models of shares handle zeros (for example by PPML), and summaries by size let results be checked against the size of the squares.
+- Squares straddle municipal boundaries, which only matters where they are matched to municipal flows (through the crosswalk).
 
 ## Layout
 
@@ -59,7 +70,7 @@ Tables are keyed by zones as published: municipality codes (`city_code`, five di
 ## Columns
 
 - Columns are in snake_case. `_code` is a code from an official classification, `_name` is a label, and counts are named `n_<things>`.
-- Money and other quantities carry their unit in the name (`price_median_jpy_per_m2`).
+- Money and other quantities carry their unit in the name (`price_jpy_per_m2`), and summaries also their statistic (`price_median_jpy_per_m2`).
 - Every table starts with `year` and `release`, then its keys, then its values.
 
 ## Terms of use
@@ -72,7 +83,8 @@ Each getter shows the terms of use of its sources the first time it is called in
 
 From 地価公示 (L01 of National Land Numerical Information, read with `ksjdata::ksj_get()`). Prices are as of January 1 of `year`, in yen per square meter.
 
-- One target per year, from the nationwide file of that year's release (2007 onward). Earlier releases are split by prefecture, and are left for later.
-- The layout of the files changes between releases, and the attribute table describes only the latest, so the columns of each release are listed in `inst/tarchives/land-price/columns.csv`. `data-raw/land_price_columns.R` finds them from their contents, and the pipeline checks them again: every municipality code has five digits with a valid prefecture, every use code has three digits, every price is a positive number, and the number of sites is the one recorded.
-- The table summarises the sites by municipality and use: the number of sites and the median and mean price. Sites are not weighted.
-- 都道府県地価調査 (L02, as of July 1) is planned as a second source of the same table.
+- One row per site, as an `sf` tibble of points: `year`, `release`, `city_code`, `use_code`, `site_number` (which together identify a site within a year), `price_jpy_per_m2`, and `geometry`.
+- One target per year, from the nationwide file of that year's release (2007 onward). Earlier releases are split by prefecture, and are left for later. A call returns one year, as the coordinate reference system differs between releases (JGD2000 until 2023, JGD2011 from 2024) and is not transformed. The files until 2017 have no `.prj` file, and are set to JGD2000, the datum of the catalog for them.
+- The layout of the files changes between releases, and the attribute table describes only the latest, so the columns of each release are listed in `inst/tarchives/land-price/columns.csv`. `data-raw/land_price_columns.R` finds them from their contents, and the pipeline checks them again: every municipality code has five digits with a valid prefecture, every use code and site number has three digits, every price is a positive number, the coordinate reference system is the one recorded, and the number of sites is the one recorded.
+- Sites cover only some grid squares. Summaries by grid square size (with the number of sites and named statistics, by use) and an interpolated surface for squares without sites are planned as separate tables.
+- 都道府県地価調査 (L02, as of July 1) is planned as a second, separate source.

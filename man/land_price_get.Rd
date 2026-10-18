@@ -2,7 +2,7 @@
 % Please edit documentation in R/land-price-get.R
 \name{land_price_get}
 \alias{land_price_get}
-\title{Get land prices by municipality}
+\title{Get land prices}
 \source{
 Ministry of Land, Infrastructure, Transport and Tourism, National
 Land Numerical Information, 地価公示データ (L01):
@@ -14,39 +14,49 @@ terms of use are on
 land_price_get(year)
 }
 \arguments{
-\item{year}{Reference years, from 2007 to the latest release. See
-\code{\link[=land_price_files]{land_price_files()}} for the available years.}
+\item{year}{Reference year, from 2007 to the latest release. See
+\code{\link[=land_price_files]{land_price_files()}} for the available years. To get several years,
+iterate over them, for example with \code{purrr::map()}: the coordinate
+reference system differs between releases, so bind them after making
+it the same.}
 }
 \value{
-A tibble with one row per year, municipality, and use:
+An \code{sf} tibble with one row per site:
 \itemize{
 \item \code{year}: The reference year (integer). Prices are as of January 1.
 \item \code{release}: The year of the release the values are taken from (integer).
 It is \code{year}.
-\item \code{city_code}: Five-digit municipality code of the site, as published for
-that year. Designated cities are split into wards.
+\item \code{city_code}: Five-digit municipality code of the number of the site
+(標準地番号), as published for that year. Designated cities are split
+into wards.
 \item \code{use_code}: Three-digit use of the site (用途区分), as published. The
 codes are those of the code list of the latest release (\code{000} 住宅地,
 \code{003} 宅地見込地, \code{005} 商業地, \code{009} 工業地, \code{013} 林地) and, until
 2012, also \code{007} and \code{010}, which are not used from 2013. The files of
 2014 to 2016 have no sites of \code{003} or \code{013}. Compare uses across these
 breaks with care.
-\item \code{n_points}: The number of sites.
-\item \code{price_median_jpy_per_m2}, \code{price_mean_jpy_per_m2}: The median and the
-mean price of the sites, in yen per square meter. Sites are not
-weighted.
+\item \code{site_number}: Three-digit serial number of the site within its
+municipality and use, as published. \code{city_code}, \code{use_code}, and
+\code{site_number} identify a site within a year; numbers can change between
+years.
+\item \code{price_jpy_per_m2}: The price in yen per square meter.
+\item \code{geometry}: The point of the site, as published. Its coordinate
+reference system is that of the release: JGD2000 (EPSG:4612) until 2023
+and JGD2011 (EPSG:6668) from 2024. The files until 2017 have no \code{.prj}
+file, and are set to JGD2000, the datum of the catalog.
 }
 }
 \description{
-Returns the official land prices (地価公示) of National Land Numerical
-Information summarised by municipality and use. The first call for a year
-downloads the file of that year's release (via ksjdata) and builds the
-table, which is then cached.
+Returns the sites of the official land prices (地価公示) of National Land
+Numerical Information in a year, one row per site, as published. The first
+call for a year downloads the file of that year's release (via ksjdata) and
+builds the table, which is then cached.
 }
 \details{
-Each year is taken from its own release, so a year covers every site that
-was surveyed in it, and its values do not change when a later release is
-published.
+The year is taken from its own release, so it covers every site that was
+surveyed in it, and its values do not change when a later release is
+published. The sites are not summarised: summarise them by municipality, by
+grid square, or by use as the analysis needs.
 
 The first time in a session, the terms of use are shown. Published or
 processed data must credit the source (National Land Numerical Information,
@@ -55,10 +65,13 @@ Tourism), and processed data must say that they were processed.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
-land_price_get(2020)
+sites <- land_price_get(2020)
 
-# Several years
-land_price_get(c(2010, 2015, 2020))
+# Median price of residential sites by municipality
+sites |>
+  sf::st_drop_geometry() |>
+  dplyr::filter(use_code == "000") |>
+  dplyr::summarise(price = median(price_jpy_per_m2), .by = city_code)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

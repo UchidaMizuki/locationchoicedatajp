@@ -19,14 +19,13 @@ Imports:
     cli,
     ksjdata,
     rlang (>= 1.1.0),
+    sf,
     tarchives (>= 0.2.0.9000),
     targets,
     tibble,
-    utils,
-    vctrs
+    utils
 Suggests:
     dplyr (>= 1.1.0),
-    sf,
     stringr,
     tarchetypes,
     testthat (>= 3.0.0)

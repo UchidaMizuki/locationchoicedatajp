@@ -8,14 +8,15 @@ land_price_files()
 }
 \value{
 A tibble with one row per year: \code{year}, \code{file_name}, the columns
-\code{city_code}, \code{use_code}, and \code{price}, \code{n_points}, and the \code{url} of the
-file.
+\code{city_code}, \code{use_code}, \code{site_number}, and \code{price}, \code{epsg}, \code{n_points},
+and the \code{url} of the file.
 }
 \description{
 \code{land_price_files()} lists the file of each year of \code{\link[=land_price_get]{land_price_get()}}: the
 nationwide file of that year's release of 地価公示 (L01) in
 \link[ksjdata:ksj_available]{ksjdata::ksj_available}, with the columns that hold the municipality, the
-use, and the price, and the number of sites. The layout of the files
+use, the serial number, and the price, the EPSG code of its coordinate
+reference system, and the number of sites. The layout of the files
 changes between releases, so the columns are listed for each one. It is
 used by the bundled pipeline.
 }
