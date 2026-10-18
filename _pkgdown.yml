@@ -2,3 +2,9 @@ url: https://uchidamizuki.github.io/locationchoicedatajp/
 
 template:
   bootstrap: 5
+
+reference:
+- title: Land prices
+  contents:
+  - land_price_get
+  - land_price_target

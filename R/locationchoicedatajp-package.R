@@ -2,6 +2,8 @@
 "_PACKAGE"
 
 ## usethis namespace: start
+#' @import rlang
+#' @importFrom sf st_as_sf
 ## usethis namespace: end
 
 ## mockable bindings: start

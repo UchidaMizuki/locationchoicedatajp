@@ -12,6 +12,7 @@ Provides reproducible pipelines that build analysis-ready tables for estimating 
 Useful links:
 \itemize{
   \item \url{https://github.com/UchidaMizuki/locationchoicedatajp}
+  \item \url{https://uchidamizuki.github.io/locationchoicedatajp/}
   \item Report bugs at \url{https://github.com/UchidaMizuki/locationchoicedatajp/issues}
 }
 

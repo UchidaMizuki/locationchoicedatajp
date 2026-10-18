@@ -15,8 +15,23 @@ URL: https://github.com/UchidaMizuki/locationchoicedatajp,
 BugReports: https://github.com/UchidaMizuki/locationchoicedatajp/issues
 Depends:
     R (>= 4.1.0)
+Imports:
+    cli,
+    ksjdata,
+    rlang (>= 1.1.0),
+    sf,
+    tarchives (>= 0.2.0.9000),
+    targets,
+    tibble,
+    utils
 Suggests:
+    dplyr (>= 1.1.0),
+    stringr,
+    tarchetypes,
     testthat (>= 3.0.0)
+Remotes:
+    UchidaMizuki/ksjdata,
+    UchidaMizuki/tarchives
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
