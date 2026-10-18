@@ -23,3 +23,9 @@
   [`land_price_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/land_price_target.md)
   declares them as a target
   ([\#9](https://github.com/UchidaMizuki/locationchoicedatajp/issues/9)).
+- [`land_price_grid_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/land_price_grid_get.md)
+  summarises the sites of the land prices by 500 m or 1 km grid square
+  and use (number of sites, median, and geometric mean), and
+  [`land_price_grid_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/land_price_grid_target.md)
+  declares it as a target
+  ([\#9](https://github.com/UchidaMizuki/locationchoicedatajp/issues/9)).

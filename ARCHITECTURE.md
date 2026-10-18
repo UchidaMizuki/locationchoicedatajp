@@ -189,10 +189,14 @@ Prices are as of January 1 of `year`, in yen per square meter.
   three digits, every price is a positive number, the coordinate
   reference system is the one recorded, and the number of sites is the
   one recorded.
-- Sites cover only some grid squares. Summaries by grid square size
-  (with the number of sites and named statistics, by use) and an
-  interpolated surface for squares without sites are planned as separate
-  tables.
+- Sites cover only some grid squares.
+  [`land_price_grid_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/land_price_grid_get.md)
+  summarises them by grid square (500 m or 1 km) and use, as a separate
+  table: the number of sites, the median, and the geometric mean (prices
+  are skewed). Squares without sites have no row. In 2020, 95% of the
+  rows at 500 m and 79% at 1 km have a single site, so `n_points` is
+  always given. An interpolated surface for squares without sites is
+  planned as another separate table.
 - 都道府県地価調査 (L02, as of July 1) is planned as a second, separate
   source.
 
