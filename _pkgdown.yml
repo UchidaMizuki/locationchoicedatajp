@@ -13,3 +13,5 @@ reference:
   contents:
   - land_price_get
   - land_price_target
+  - land_price_grid_get
+  - land_price_grid_target
