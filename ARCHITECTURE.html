@@ -68,9 +68,9 @@
 </tr><tr><td>Release</td>
 <td><code>release</code></td>
 <td>The year of the publication the value is taken from.</td>
-</tr><tr><td>Zone year</td>
-<td>(none yet)</td>
-<td>The year of the zones the value is keyed by. Zones are kept as published, so it is the reference year for now (see <a href="#zones">Zones</a>).</td>
+</tr><tr><td>Boundary date</td>
+<td><code>boundary_date</code></td>
+<td>The date of the administrative boundaries a table of zones describes (<code><a href="reference/grid_city_get.html">grid_city_get()</a></code>). Municipality codes are kept as published for the reference date of each table, which picks the boundaries in force on it (see <a href="#zones">Zones</a>).</td>
 </tr></tbody></table><p>Sources publish the same reference year more than once:</p>
 <ul><li>A release can carry values of past years. The 2026 release of 地価公示 has the price of every current site in every year since 1983, and the 2020 Population Census republishes the population of 2015 on the zones of 2020.</li>
 <li>A release can be replaced by a revised one (速報 then 確報, or a corrected file).</li>
@@ -92,8 +92,8 @@
 <strong>Grid squares</strong> are the base zones. Their boundaries are fixed, so years compare without harmonization; they are nearly equal in size; they nest exactly (1 km, 500 m, 250 m); and the Population Census and the Economic Census publish statistics on them. The default size is 500 m, which is fine enough within cities without leaving most squares empty or suppressed (250 m).</li>
 <li>
 <strong>Municipalities</strong> (<code>city_code</code>, five digits with the leading zero, as published for the reference year, with the wards of designated cities) are kept because commuting origin-destination flows are published only for them. A model of residence on grid squares is matched to these flows by summing its predictions over the squares of each municipality.</li>
-<li>A crosswalk of grid squares to municipalities (with the share of each square in each municipality, as squares straddle boundaries) links the two. It is built for each year from the administrative boundaries of that year (N03 of National Land Numerical Information).</li>
-<li>Tables with a location (<code>sf</code> points) are not given a grid square code: assigning points to squares is a shared step on the zones, so that every point source uses the same one.</li>
+<li>A crosswalk of grid squares to municipalities, <code>grid_city_get(date)</code>, links the two: the land area of each 500 m square in each municipality and its share (about one square in seven straddles a boundary in Tokyo). It is built from the administrative boundaries (N03 of National Land Numerical Information) in force on <code>date</code>, so a table is linked with the boundaries of its own reference date (October 1 for the Population Census, January 1 for 地価公示). N03 is released once or twice a year, on irregular dates until 2014 and on January 1 from 2015.</li>
+<li>Tables with a location (<code>sf</code> points) are not given a grid square code: <code><a href="reference/grid_code.html">grid_code()</a></code> assigns points to squares, the same way for every point source.</li>
 <li>Harmonizing municipality codes to the zones of one reference year (municipal mergers) is a separate, shared step, added once jpcity supports it. It will take the code and its reference date, so every table must keep <code>year</code> and the published code.</li>
 </ul><p>Known limits of grid squares, and how they are handled:</p>
 <ul><li>Census grid statistics are compiled by assigning basic unit blocks (基本単位区) to squares, and the census publishes fewer cross-tabulations for squares than for small areas (町丁・字). Small areas may be added as a secondary zone system, linked through the grid squares, if a model needs those tables.</li>
@@ -135,6 +135,14 @@
 <li>The layout of the files changes between releases, and the attribute table describes only the latest, so the columns of each release are listed in <code>inst/tarchives/land-price/columns.csv</code>. <code>data-raw/land_price_columns.R</code> finds them from their contents, and the pipeline checks them again: every municipality code has five digits with a valid prefecture, every use code and site number has three digits, every price is a positive number, the coordinate reference system is the one recorded, and the number of sites is the one recorded.</li>
 <li>Sites cover only some grid squares. Summaries by grid square size (with the number of sites and named statistics, by use) and an interpolated surface for squares without sites are planned as separate tables.</li>
 <li>都道府県地価調査 (L02, as of July 1) is planned as a second, separate source.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="crosswalk-of-grid-squares-to-municipalities-grid_city_get">Crosswalk of grid squares to municipalities (<code>grid_city_get()</code>)<a class="anchor" aria-label="anchor" href="#crosswalk-of-grid-squares-to-municipalities-grid_city_get"></a></h3>
+<p>From 行政区域 (N03 of National Land Numerical Information, read with <code><a href="https://rdrr.io/pkg/ksjdata/man/ksj_get.html" class="external-link">ksjdata::ksj_get()</a></code>), one target per release and prefecture (a release is about 370 MB in 47 files), and two per release that bind its prefectures into 500 m and 1 km squares, so that a call reads one target. The first call for a release takes about 45 minutes, including the downloads; later calls take about a second.</p>
+<ul><li>The polygons are dissolved by municipality code (<code>N03_007</code>, the same column in every release) and cut by the 500 m squares they touch. The cutting is planar in longitude and latitude, in which the squares are rectangles, and the areas are computed in an Albers equal-area projection on the GRS80 ellipsoid. Files without a <code>.prj</code> file are set to JGD2000, the datum of the catalog for them.</li>
+<li>Shares are computed after binding the prefectures, as squares straddle their borders. 1 km squares sum the areas of their four 500 m squares, whose codes start with the code of the 1 km square.</li>
+<li>Checked for 2020: the land area is 377,971 km² (377,975 km² in the official survey of areas), 1,902 municipality codes, the shares of every square sum to one, and every site of 地価公示 lies in a square of its own municipality.</li>
+<li>Areas are of land within the administrative boundaries. Land whose municipality is undetermined (所属未定地) is kept, with <code>city_code</code> <code>NA</code>, so that the shares of every square sum to one.</li>
 </ul></div>
 </div>
 </div>

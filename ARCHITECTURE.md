@@ -44,7 +44,7 @@ A value has up to three dates, and a table never mixes them silently:
 |----|----|----|
 | Reference year | `year` | The year the value describes. Its exact date depends on the source (地価公示 is as of January 1, the Population Census as of October 1) and is documented by each getter. |
 | Release | `release` | The year of the publication the value is taken from. |
-| Zone year | (none yet) | The year of the zones the value is keyed by. Zones are kept as published, so it is the reference year for now (see [Zones](#zones)). |
+| Boundary date | `boundary_date` | The date of the administrative boundaries a table of zones describes ([`grid_city_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_city_get.md)). Municipality codes are kept as published for the reference date of each table, which picks the boundaries in force on it (see [Zones](#zones)). |
 
 Sources publish the same reference year more than once:
 
@@ -98,13 +98,18 @@ workplaces and commuting flows on municipalities:
   for them. A model of residence on grid squares is matched to these
   flows by summing its predictions over the squares of each
   municipality.
-- A crosswalk of grid squares to municipalities (with the share of each
-  square in each municipality, as squares straddle boundaries) links the
-  two. It is built for each year from the administrative boundaries of
-  that year (N03 of National Land Numerical Information).
+- A crosswalk of grid squares to municipalities, `grid_city_get(date)`,
+  links the two: the land area of each 500 m square in each municipality
+  and its share (about one square in seven straddles a boundary in
+  Tokyo). It is built from the administrative boundaries (N03 of
+  National Land Numerical Information) in force on `date`, so a table is
+  linked with the boundaries of its own reference date (October 1 for
+  the Population Census, January 1 for 地価公示). N03 is released once
+  or twice a year, on irregular dates until 2014 and on January 1 from
+  2015.
 - Tables with a location (`sf` points) are not given a grid square code:
-  assigning points to squares is a shared step on the zones, so that
-  every point source uses the same one.
+  [`grid_code()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_code.md)
+  assigns points to squares, the same way for every point source.
 - Harmonizing municipality codes to the zones of one reference year
   (municipal mergers) is a separate, shared step, added once jpcity
   supports it. It will take the code and its reference date, so every
@@ -190,3 +195,30 @@ Prices are as of January 1 of `year`, in yen per square meter.
   tables.
 - 都道府県地価調査 (L02, as of July 1) is planned as a second, separate
   source.
+
+### Crosswalk of grid squares to municipalities (`grid_city_get()`)
+
+From 行政区域 (N03 of National Land Numerical Information, read with
+[`ksjdata::ksj_get()`](https://rdrr.io/pkg/ksjdata/man/ksj_get.html)),
+one target per release and prefecture (a release is about 370 MB in 47
+files), and two per release that bind its prefectures into 500 m and 1
+km squares, so that a call reads one target. The first call for a
+release takes about 45 minutes, including the downloads; later calls
+take about a second.
+
+- The polygons are dissolved by municipality code (`N03_007`, the same
+  column in every release) and cut by the 500 m squares they touch. The
+  cutting is planar in longitude and latitude, in which the squares are
+  rectangles, and the areas are computed in an Albers equal-area
+  projection on the GRS80 ellipsoid. Files without a `.prj` file are set
+  to JGD2000, the datum of the catalog for them.
+- Shares are computed after binding the prefectures, as squares straddle
+  their borders. 1 km squares sum the areas of their four 500 m squares,
+  whose codes start with the code of the 1 km square.
+- Checked for 2020: the land area is 377,971 km² (377,975 km² in the
+  official survey of areas), 1,902 municipality codes, the shares of
+  every square sum to one, and every site of 地価公示 lies in a square
+  of its own municipality.
+- Areas are of land within the administrative boundaries. Land whose
+  municipality is undetermined (所属未定地) is kept, with `city_code`
+  `NA`, so that the shares of every square sum to one.
