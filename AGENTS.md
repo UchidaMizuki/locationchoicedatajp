@@ -9,9 +9,14 @@ package. See the roadmap in issue \#1.
 
 - Keep the code simple: one small function per step, plain tibbles and
   `sf` objects, no tibble subclasses or hidden attributes.
+- Return observations as published (a site, a grid square), never
+  summaries. Summaries over zones and interpolated values are separate
+  tables.
 - Do not bundle data. Ship pipeline definitions in `inst/tarchives/`,
-  one pipeline per source and vintage, and let tarchives build and cache
-  the data.
+  one pipeline per table with one target per reference year, and let
+  tarchives build and cache the data. Read `ARCHITECTURE.md` before
+  making changes, and update it when a change alters the design it
+  describes.
 - Expose each table through `*_get()`, and declare it as a target
   through `*_target()` and `*_target_raw()`.
 - Reuse the data packages built on tarchives instead of downloading the
@@ -20,6 +25,9 @@ package. See the roadmap in issue \#1.
 - Every table records its source and terms of use.
 - Use consistent column names across tables (`year`, `origin`,
   `destination`, …) and document every column with its unit.
+- Take each reference year from its own release by default, and give
+  every table `year` and `release` columns (see “Time” in
+  `ARCHITECTURE.md`). Never mix releases silently.
 - Keep zones as published (codes with leading zeros, as character).
   Harmonization of municipality codes to a reference year is a separate
   shared step.

@@ -1,6 +1,7 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://uchidamizuki.github.io/locationchoicedatajp/404.html</loc></url>
 <url><loc>https://uchidamizuki.github.io/locationchoicedatajp/AGENTS.html</loc></url>
+<url><loc>https://uchidamizuki.github.io/locationchoicedatajp/ARCHITECTURE.html</loc></url>
 <url><loc>https://uchidamizuki.github.io/locationchoicedatajp/CONTRIBUTING.html</loc></url>
 <url><loc>https://uchidamizuki.github.io/locationchoicedatajp/LICENSE-text.html</loc></url>
 <url><loc>https://uchidamizuki.github.io/locationchoicedatajp/LICENSE.html</loc></url>
@@ -8,6 +9,10 @@
 <url><loc>https://uchidamizuki.github.io/locationchoicedatajp/index.html</loc></url>
 <url><loc>https://uchidamizuki.github.io/locationchoicedatajp/news/index.html</loc></url>
 <url><loc>https://uchidamizuki.github.io/locationchoicedatajp/reference/index.html</loc></url>
+<url><loc>https://uchidamizuki.github.io/locationchoicedatajp/reference/land_price_files.html</loc></url>
+<url><loc>https://uchidamizuki.github.io/locationchoicedatajp/reference/land_price_get.html</loc></url>
+<url><loc>https://uchidamizuki.github.io/locationchoicedatajp/reference/land_price_target.html</loc></url>
+<url><loc>https://uchidamizuki.github.io/locationchoicedatajp/reference/land_price_target_name.html</loc></url>
 <url><loc>https://uchidamizuki.github.io/locationchoicedatajp/reference/locationchoicedatajp-package.html</loc></url>
 </urlset>
 

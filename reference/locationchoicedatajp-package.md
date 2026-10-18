@@ -12,6 +12,8 @@ Useful links:
 
 - <https://github.com/UchidaMizuki/locationchoicedatajp>
 
+- <https://uchidamizuki.github.io/locationchoicedatajp/>
+
 - Report bugs at
   <https://github.com/UchidaMizuki/locationchoicedatajp/issues>
 

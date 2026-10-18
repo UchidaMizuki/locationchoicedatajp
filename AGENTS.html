@@ -38,11 +38,13 @@
 <!-- Insert package-specific content here. use_tidy_agents() will preserve this section when updating the rest of the file. -->
 <p>locationchoicedatajp builds analysis-ready tables for estimating household and firm location choice models in Japan from open data, built on tarchives. It is the data layer; estimation belongs in a separate package. See the roadmap in issue #1.</p>
 <ul><li>Keep the code simple: one small function per step, plain tibbles and <code>sf</code> objects, no tibble subclasses or hidden attributes.</li>
-<li>Do not bundle data. Ship pipeline definitions in <code>inst/tarchives/</code>, one pipeline per source and vintage, and let tarchives build and cache the data.</li>
+<li>Return observations as published (a site, a grid square), never summaries. Summaries over zones and interpolated values are separate tables.</li>
+<li>Do not bundle data. Ship pipeline definitions in <code>inst/tarchives/</code>, one pipeline per table with one target per reference year, and let tarchives build and cache the data. Read <code>ARCHITECTURE.md</code> before making changes, and update it when a change alters the design it describes.</li>
 <li>Expose each table through <code>*_get()</code>, and declare it as a target through <code>*_target()</code> and <code>*_target_raw()</code>.</li>
 <li>Reuse the data packages built on tarchives instead of downloading the same source again (for example National Land Numerical Information through ksjdata).</li>
 <li>Every table records its source and terms of use.</li>
 <li>Use consistent column names across tables (<code>year</code>, <code>origin</code>, <code>destination</code>, …) and document every column with its unit.</li>
+<li>Take each reference year from its own release by default, and give every table <code>year</code> and <code>release</code> columns (see “Time” in <code>ARCHITECTURE.md</code>). Never mix releases silently.</li>
 <li>Keep zones as published (codes with leading zeros, as character). Harmonization of municipality codes to a reference year is a separate shared step.</li>
 <li>Keep published zeros (<code>0</code>) distinct from suppressed or blank cells (<code>NA</code>), and keep zero flows explicit.</li>
 <li>Check every output (keys, ranges, totals against published figures).</li>
