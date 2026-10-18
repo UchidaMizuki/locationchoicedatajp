@@ -27,3 +27,38 @@ fake_land_price_columns <- function() {
     price = "L01_006"
   )
 }
+
+# Two municipalities inside two 500 m grid squares, `533945092` and
+# `533946001`, split inside the first square, without a coordinate reference
+# system.
+fake_city_layer <- function() {
+  box <- function(xmin, xmax) {
+    ymin <- 35.667
+    ymax <- 35.6705
+    sf::st_polygon(list(rbind(
+      c(xmin, ymin),
+      c(xmax, ymin),
+      c(xmax, ymax),
+      c(xmin, ymax),
+      c(xmin, ymin)
+    )))
+  }
+  sf::st_sf(
+    N03_007 = c("13101", "13102"),
+    geometry = sf::st_sfc(
+      box(139.744, 139.747),
+      box(139.747, 139.756)
+    )
+  )
+}
+
+# Areas of grid squares as stored by the pipeline: a 500 m square in two
+# municipalities, one in a single municipality of the same 1 km square, and
+# one with undetermined land.
+fake_grid_city_areas <- function() {
+  tibble::tibble(
+    grid_code = c("533945092", "533945092", "533945093", "533945094"),
+    city_code = c("13101", "13102", "13102", NA),
+    area_m2 = c(100, 300, 400, 200)
+  )
+}

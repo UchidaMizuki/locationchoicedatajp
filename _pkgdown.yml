@@ -4,6 +4,11 @@ template:
   bootstrap: 5
 
 reference:
+- title: Zones
+  contents:
+  - grid_city_get
+  - grid_city_target
+  - grid_code
 - title: Land prices
   contents:
   - land_price_get
