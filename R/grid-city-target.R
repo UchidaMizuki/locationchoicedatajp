@@ -12,8 +12,8 @@
 #' @returns A target object.
 #' @export
 #' @examples
-#' grid_city_target(grid_city_2020, "2020-10-01")
-grid_city_target <- function(name, date, grid_size = "500m", ...) {
+#' grid_city_target(grid_city_2020, "2020-10-01", "500m")
+grid_city_target <- function(name, date, grid_size, ...) {
   name <- targets::tar_deparse_language(substitute(name))
   grid_city_target_raw(name = name, date = date, grid_size = grid_size, ...)
 }
@@ -23,12 +23,12 @@ grid_city_target <- function(name, date, grid_size = "500m", ...) {
 grid_city_target_raw <- function(
   name,
   date,
-  grid_size = "500m",
+  grid_size,
   ...
 ) {
   check_string(name)
   date <- check_boundary_date(date)
-  grid_size <- rlang::arg_match(grid_size, grid_sizes())
+  grid_size <- check_grid_size(grid_size)
 
   command <- rlang::call2(
     "grid_city_get",

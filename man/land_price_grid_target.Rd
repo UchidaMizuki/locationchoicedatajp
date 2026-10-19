@@ -5,9 +5,9 @@
 \alias{land_price_grid_target_raw}
 \title{Target of land prices summarised by grid square}
 \usage{
-land_price_grid_target(name, year, grid_size = "500m", ...)
+land_price_grid_target(name, year, grid_size, ...)
 
-land_price_grid_target_raw(name, year, grid_size = "500m", ...)
+land_price_grid_target_raw(name, year, grid_size, ...)
 }
 \arguments{
 \item{name}{Name of the target: a symbol for \code{land_price_target()}, a string
@@ -19,8 +19,9 @@ iterate over them, for example with \code{purrr::map()}: the coordinate
 reference system differs between releases, so bind them after making
 it the same.}
 
-\item{grid_size}{The size of the grid squares: one of \code{\link[=grid_sizes]{grid_sizes()}},
-\code{"500m"} by default. Each size is built and cached for a release on its
+\item{grid_size}{The size of the grid squares: one of \code{\link[=grid_sizes]{grid_sizes()}}
+(\code{"1km"}, \code{"500m"}, or \code{"250m"}). There is no default, as the size is a
+choice of the model. Each size is built and cached for a release on its
 first call, without rebuilding the others.}
 
 \item{...}{Other arguments passed to \code{\link[targets:tar_target_raw]{targets::tar_target_raw()}}.}

@@ -25,8 +25,9 @@
 #'   date of the table to link, for example October 1 for the Population
 #'   Census and January 1 for 地価公示. See [grid_city_files()] for the
 #'   releases.
-#' @param grid_size The size of the grid squares: one of [grid_sizes()],
-#'   `"500m"` by default. Each size is built and cached for a release on its
+#' @param grid_size The size of the grid squares: one of [grid_sizes()]
+#'   (`"1km"`, `"500m"`, or `"250m"`). There is no default, as the size is a
+#'   choice of the model. Each size is built and cached for a release on its
 #'   first call, without rebuilding the others.
 #'
 #' @return A tibble with one row per grid square and municipality:
@@ -35,8 +36,7 @@
 #'   * `release`: The year of the release in National Land Numerical
 #'     Information (integer).
 #'   * `grid_code`: The code of the grid square (地域メッシュ・コード), with
-#'     four digits for 80 km, six for 10 km, seven for 5 km, eight for 1 km,
-#'     nine for 500 m, ten for 250 m, and eleven for 125 m.
+#'     eight digits for 1 km, nine for 500 m, and ten for 250 m.
 #'   * `city_code`: Five-digit municipality code, as published in the release.
 #'     Designated cities are split into wards. Land whose municipality is
 #'     undetermined (所属未定地) is `NA`.
@@ -52,12 +52,12 @@
 #' @seealso [grid_code()] to give points the code of their grid square.
 #'
 #' @examplesIf interactive()
-#' grid_city_get("2020-10-01")
+#' grid_city_get("2020-10-01", "500m")
 #'
 #' @export
-grid_city_get <- function(date, grid_size = "500m") {
+grid_city_get <- function(date, grid_size) {
   date <- check_boundary_date(date)
-  grid_size <- rlang::arg_match(grid_size, grid_sizes())
+  grid_size <- check_grid_size(grid_size)
   files <- grid_city_files()
   boundary_date <- grid_city_release_date(date, files)
   release <- files$release[files$boundary_date == boundary_date][[1]]

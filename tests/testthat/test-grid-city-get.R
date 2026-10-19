@@ -46,9 +46,9 @@ test_that("grid_city_get() reads the crosswalk of the release in force", {
 
 test_that("grid_city_get() errors on an invalid date", {
   expect_snapshot(error = TRUE, {
-    grid_city_get("2020-13-01")
-    grid_city_get(2020)
-    grid_city_get("2000-01-01")
+    grid_city_get("2020-13-01", "500m")
+    grid_city_get(2020, "500m")
+    grid_city_get("2000-01-01", "500m")
   })
 })
 

@@ -4,15 +4,16 @@
 \alias{grid_code}
 \title{Code of the grid square of points}
 \usage{
-grid_code(x, grid_size = "500m")
+grid_code(x, grid_size)
 }
 \arguments{
 \item{x}{An \code{sf} object or \code{sfc} of points with longitude and latitude, such
 as JGD2011 or JGD2000. Their difference is far smaller than a grid square,
 so the coordinates are used as they are.}
 
-\item{grid_size}{The size of the grid squares: one of \code{\link[=grid_sizes]{grid_sizes()}},
-\code{"500m"} by default. Each size is built and cached for a release on its
+\item{grid_size}{The size of the grid squares: one of \code{\link[=grid_sizes]{grid_sizes()}}
+(\code{"1km"}, \code{"500m"}, or \code{"250m"}). There is no default, as the size is a
+choice of the model. Each size is built and cached for a release on its
 first call, without rebuilding the others.}
 }
 \value{
@@ -28,6 +29,6 @@ tables on grid squares and \code{\link[=grid_city_get]{grid_city_get()}}.
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 sites <- land_price_get(2020)
-sites$grid_code <- grid_code(sites)
+sites$grid_code <- grid_code(sites, "500m")
 \dontshow{\}) # examplesIf}
 }

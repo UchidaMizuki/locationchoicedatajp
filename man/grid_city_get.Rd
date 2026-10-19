@@ -9,7 +9,7 @@ Land Numerical Information, 行政区域データ (N03):
 \url{https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-2026.html}.
 }
 \usage{
-grid_city_get(date, grid_size = "500m")
+grid_city_get(date, grid_size)
 }
 \arguments{
 \item{date}{The date of the boundaries: a \code{Date} or a string such as
@@ -19,8 +19,9 @@ date of the table to link, for example October 1 for the Population
 Census and January 1 for 地価公示. See \code{\link[=grid_city_files]{grid_city_files()}} for the
 releases.}
 
-\item{grid_size}{The size of the grid squares: one of \code{\link[=grid_sizes]{grid_sizes()}},
-\code{"500m"} by default. Each size is built and cached for a release on its
+\item{grid_size}{The size of the grid squares: one of \code{\link[=grid_sizes]{grid_sizes()}}
+(\code{"1km"}, \code{"500m"}, or \code{"250m"}). There is no default, as the size is a
+choice of the model. Each size is built and cached for a release on its
 first call, without rebuilding the others.}
 }
 \value{
@@ -30,8 +31,7 @@ A tibble with one row per grid square and municipality:
 \item \code{release}: The year of the release in National Land Numerical
 Information (integer).
 \item \code{grid_code}: The code of the grid square (地域メッシュ・コード), with
-four digits for 80 km, six for 10 km, seven for 5 km, eight for 1 km,
-nine for 500 m, ten for 250 m, and eleven for 125 m.
+eight digits for 1 km, nine for 500 m, and ten for 250 m.
 \item \code{city_code}: Five-digit municipality code, as published in the release.
 Designated cities are split into wards. Land whose municipality is
 undetermined (所属未定地) is \code{NA}.
@@ -64,7 +64,7 @@ Tourism), and processed data must say that they were processed.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
-grid_city_get("2020-10-01")
+grid_city_get("2020-10-01", "500m")
 \dontshow{\}) # examplesIf}
 }
 \seealso{

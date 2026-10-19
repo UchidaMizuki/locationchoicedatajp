@@ -5,9 +5,9 @@
 \alias{grid_city_target_raw}
 \title{Target of the crosswalk of grid squares to municipalities}
 \usage{
-grid_city_target(name, date, grid_size = "500m", ...)
+grid_city_target(name, date, grid_size, ...)
 
-grid_city_target_raw(name, date, grid_size = "500m", ...)
+grid_city_target_raw(name, date, grid_size, ...)
 }
 \arguments{
 \item{name}{Name of the target: a symbol for \code{grid_city_target()}, a string
@@ -20,8 +20,9 @@ date of the table to link, for example October 1 for the Population
 Census and January 1 for 地価公示. See \code{\link[=grid_city_files]{grid_city_files()}} for the
 releases.}
 
-\item{grid_size}{The size of the grid squares: one of \code{\link[=grid_sizes]{grid_sizes()}},
-\code{"500m"} by default. Each size is built and cached for a release on its
+\item{grid_size}{The size of the grid squares: one of \code{\link[=grid_sizes]{grid_sizes()}}
+(\code{"1km"}, \code{"500m"}, or \code{"250m"}). There is no default, as the size is a
+choice of the model. Each size is built and cached for a release on its
 first call, without rebuilding the others.}
 
 \item{...}{Other arguments passed to \code{\link[targets:tar_target_raw]{targets::tar_target_raw()}}.}
@@ -36,5 +37,5 @@ target is rerun when the arguments, the URLs of the files of the release, or
 the installed version of locationchoicedatajp change.
 }
 \examples{
-grid_city_target(grid_city_2020, "2020-10-01")
+grid_city_target(grid_city_2020, "2020-10-01", "500m")
 }
