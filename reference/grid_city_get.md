@@ -12,7 +12,7 @@ and later calls take about a second.
 ## Usage
 
 ``` r
-grid_city_get(date, grid_size = "500m")
+grid_city_get(date, grid_size)
 ```
 
 ## Source
@@ -36,8 +36,9 @@ Numerical Information, 行政区域データ (N03):
 - grid_size:
 
   The size of the grid squares: one of
-  [`grid_sizes()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_sizes.md),
-  `"500m"` by default. Each size is built and cached for a release on
+  [`grid_sizes()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_sizes.md)
+  (`"1km"`, `"500m"`, or `"250m"`). There is no default, as the size is
+  a choice of the model. Each size is built and cached for a release on
   its first call, without rebuilding the others.
 
 ## Value
@@ -50,8 +51,7 @@ A tibble with one row per grid square and municipality:
   Information (integer).
 
 - `grid_code`: The code of the grid square (地域メッシュ・コード), with
-  four digits for 80 km, six for 10 km, seven for 5 km, eight for 1 km,
-  nine for 500 m, ten for 250 m, and eleven for 125 m.
+  eight digits for 1 km, nine for 500 m, and ten for 250 m.
 
 - `city_code`: Five-digit municipality code, as published in the
   release. Designated cities are split into wards. Land whose
@@ -86,6 +86,6 @@ to give points the code of their grid square.
 
 ``` r
 if (FALSE) { # interactive()
-grid_city_get("2020-10-01")
+grid_city_get("2020-10-01", "500m")
 }
 ```

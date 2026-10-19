@@ -17,9 +17,9 @@
   the code of their grid square
   ([\#5](https://github.com/UchidaMizuki/locationchoicedatajp/issues/5)).
 - [`grid_sizes()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_sizes.md)
-  lists the standard sizes of grid squares (80 km to 125 m), which every
-  function on grid squares takes. Each size is built on its first call
-  without rebuilding the others
+  lists the sizes of grid squares (1 km, 500 m, and 250 m), which every
+  function on grid squares takes without a default. Each size is built
+  on its first call without rebuilding the others
   ([\#5](https://github.com/UchidaMizuki/locationchoicedatajp/issues/5)).
 - [`land_price_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/land_price_get.md)
   returns the sites of the official land prices (地価公示) with their

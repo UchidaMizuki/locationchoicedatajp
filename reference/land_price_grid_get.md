@@ -11,7 +11,7 @@ for the sites.
 ## Usage
 
 ``` r
-land_price_grid_get(year, grid_size = "500m")
+land_price_grid_get(year, grid_size)
 ```
 
 ## Source
@@ -37,8 +37,9 @@ terms of use are on
 - grid_size:
 
   The size of the grid squares: one of
-  [`grid_sizes()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_sizes.md),
-  `"500m"` by default. Each size is built and cached for a release on
+  [`grid_sizes()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_sizes.md)
+  (`"1km"`, `"500m"`, or `"250m"`). There is no default, as the size is
+  a choice of the model. Each size is built and cached for a release on
   its first call, without rebuilding the others.
 
 ## Value
@@ -81,8 +82,5 @@ to declare the table as a target.
 ``` r
 if (FALSE) { # interactive()
 land_price_grid_get(2020, "1km")
-
-# Coarser squares, where most have several sites
-land_price_grid_get(2020, "10km")
 }
 ```

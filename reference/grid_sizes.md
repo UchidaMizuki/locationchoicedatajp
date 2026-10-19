@@ -1,10 +1,13 @@
 # Sizes of grid squares
 
 `grid_sizes()` lists the sizes of the standard grid squares
-(標準地域メッシュ) that the functions of locationchoicedatajp accept:
-the primary (80 km), secondary (10 km), and 5 km squares, the basic
-squares (1 km), and their halves (500 m), quarters (250 m), and eighths
-(125 m). Squares of each size nest exactly in those of the larger sizes.
+(標準地域メッシュ) that the functions of locationchoicedatajp take: the
+basic squares (1 km) and their halves (500 m) and quarters (250 m). They
+are the sizes on which the Population Census, the Economic Census (1 km
+and 500 m), and the future population of National Land Numerical
+Information are published, and they nest exactly. Coarser squares (5 km
+and over) are coarser than many municipalities, and finer squares (125
+m) have no published statistics.
 
 ## Usage
 
@@ -14,11 +17,16 @@ grid_sizes()
 
 ## Value
 
-A character vector of sizes, from the default (`"500m"`) on.
+A character vector of sizes, from the coarsest.
+
+## Details
+
+The functions have no default size, as the size is a choice of the
+model.
 
 ## Examples
 
 ``` r
 grid_sizes()
-#> [1] "500m" "80km" "10km" "5km"  "1km"  "250m" "125m"
+#> [1] "1km"  "500m" "250m"
 ```

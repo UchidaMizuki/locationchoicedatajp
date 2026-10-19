@@ -88,15 +88,22 @@ workplaces and commuting flows on municipalities:
 
 - **Grid squares** are the base zones. Their boundaries are fixed, so
   years compare without harmonization; they are nearly equal in size;
-  they nest exactly (80 km, 10 km, 5 km, 1 km, 500 m, 250 m, 125 m, the
-  standard sizes listed by
-  [`grid_sizes()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_sizes.md));
-  and the Population Census and the Economic Census publish statistics
-  on them (1 km, 500 m, and 250 m). The default size is 500 m, which is
-  fine enough within cities without leaving most squares empty or
-  suppressed (250 m). Every function on grid squares takes any of these
-  sizes, and builds each size on its first call without rebuilding the
-  others.
+  they nest exactly; and the Population Census and the Economic Census
+  publish statistics on them.
+- The sizes are those of
+  [`grid_sizes()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_sizes.md):
+  1 km, 500 m, and 250 m, the sizes on which the Population Census, the
+  Economic Census (1 km and 500 m), and the future population of
+  National Land Numerical Information are published. Coarser squares (5
+  km and over) are coarser than many municipalities, so they cannot
+  serve as residential zones within them, and finer squares (125 m) have
+  no published statistics. Sparse data, such as land prices, are handled
+  by an interpolated surface rather than by coarser squares.
+- Functions on grid squares have no default size: the size is a choice
+  of the model. Each size is built on its first call without rebuilding
+  the others, so a size can be added to
+  [`grid_sizes()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_sizes.md)
+  when a source needs it.
 - **Municipalities** (`city_code`, five digits with the leading zero, as
   published for the reference year, with the wards of designated cities)
   are kept because commuting origin-destination flows are published only
@@ -225,10 +232,10 @@ these targets, with dynamic branches over its files:
   replaced file rebuilds only its own branches.
 - Only the targets of the requested size are built. For 2020, the first
   call (500 m) took about 45 minutes with the downloads (35 without), a
-  second size took 8 minutes (1 km) or less (10 km, 80 km), as it only
-  cuts the polygons already dissolved, and later calls take about a
-  second. Adding 80 km rebuilt none of the 240 targets and branches
-  already built.
+  second size took 8 minutes (1 km), as it only cuts the polygons
+  already dissolved, and later calls take about a second. Adding a size
+  (tested with 80 km, since dropped) rebuilt none of the 240 targets and
+  branches already built.
 - The polygons are dissolved by municipality code (`N03_007`, the same
   column in every release) and cut by the squares of each size that they
   touch. The cutting is planar in longitude and latitude, in which the

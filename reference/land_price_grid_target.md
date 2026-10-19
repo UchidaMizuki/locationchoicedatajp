@@ -9,9 +9,9 @@ locationchoicedatajp change.
 ## Usage
 
 ``` r
-land_price_grid_target(name, year, grid_size = "500m", ...)
+land_price_grid_target(name, year, grid_size, ...)
 
-land_price_grid_target_raw(name, year, grid_size = "500m", ...)
+land_price_grid_target_raw(name, year, grid_size, ...)
 ```
 
 ## Arguments
@@ -36,8 +36,9 @@ land_price_grid_target_raw(name, year, grid_size = "500m", ...)
 - grid_size:
 
   The size of the grid squares: one of
-  [`grid_sizes()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_sizes.md),
-  `"500m"` by default. Each size is built and cached for a release on
+  [`grid_sizes()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_sizes.md)
+  (`"1km"`, `"500m"`, or `"250m"`). There is no default, as the size is
+  a choice of the model. Each size is built and cached for a release on
   its first call, without rebuilding the others.
 
 - ...:
