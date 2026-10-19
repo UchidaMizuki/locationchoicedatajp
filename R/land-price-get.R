@@ -69,6 +69,7 @@ land_price_get <- function(year) {
   land_price_get_archive(year)
 }
 
+# nocov start
 land_price_get_archive <- function(year) {
   tarchives::tar_get_archive_raw(
     name = land_price_target_name(year),
@@ -76,6 +77,7 @@ land_price_get_archive <- function(year) {
     pipeline = "land-price"
   )
 }
+# nocov end
 
 check_land_price_year <- function(year, call = rlang::caller_env()) {
   check_number_whole(year, call = call)

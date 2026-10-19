@@ -5,7 +5,8 @@
 #' Numerical Information) in force on a date. It links tables on grid squares
 #' to tables on municipalities, such as commuting flows. The first call for a
 #' release downloads its files (via ksjdata, about 370 MB) and builds the
-#' table, which takes about 45 minutes; it is then cached, and later calls take
+#' table, which takes about 45 minutes; another size of the same release reuses
+#' the work and takes minutes. The tables are then cached, and later calls take
 #' about a second.
 #'
 #' Grid squares straddle municipal boundaries, so a square can have several
@@ -24,17 +25,18 @@
 #'   date of the table to link, for example October 1 for the Population
 #'   Census and January 1 for 地価公示. See [grid_city_files()] for the
 #'   releases.
-#' @param grid_size The size of the grid squares: `"500m"` (the default) or
-#'   `"1km"`. Areas of 1 km squares are the sums of the areas of their four 500
-#'   m squares. Both are built and cached for a release on the first call.
+#' @param grid_size The size of the grid squares: one of [grid_sizes()],
+#'   `"500m"` by default. Each size is built and cached for a release on its
+#'   first call, without rebuilding the others.
 #'
 #' @return A tibble with one row per grid square and municipality:
 #'
 #'   * `boundary_date`: The date of the boundaries of the release (`Date`).
 #'   * `release`: The year of the release in National Land Numerical
 #'     Information (integer).
-#'   * `grid_code`: The code of the grid square (地域メッシュ・コード), nine
-#'     digits for 500 m and eight digits for 1 km.
+#'   * `grid_code`: The code of the grid square (地域メッシュ・コード), with
+#'     four digits for 80 km, six for 10 km, seven for 5 km, eight for 1 km,
+#'     nine for 500 m, ten for 250 m, and eleven for 125 m.
 #'   * `city_code`: Five-digit municipality code, as published in the release.
 #'     Designated cities are split into wards. Land whose municipality is
 #'     undetermined (所属未定地) is `NA`.
@@ -53,9 +55,9 @@
 #' grid_city_get("2020-10-01")
 #'
 #' @export
-grid_city_get <- function(date, grid_size = c("500m", "1km")) {
+grid_city_get <- function(date, grid_size = "500m") {
   date <- check_boundary_date(date)
-  grid_size <- rlang::arg_match(grid_size)
+  grid_size <- rlang::arg_match(grid_size, grid_sizes())
   files <- grid_city_files()
   boundary_date <- grid_city_release_date(date, files)
   release <- files$release[files$boundary_date == boundary_date][[1]]
@@ -70,6 +72,7 @@ grid_city_get <- function(date, grid_size = c("500m", "1km")) {
   )
 }
 
+# nocov start
 grid_city_get_archive <- function(boundary_date, grid_size) {
   tarchives::tar_get_archive_raw(
     name = grid_city_release_target_name(boundary_date, grid_size),
@@ -77,6 +80,7 @@ grid_city_get_archive <- function(boundary_date, grid_size) {
     pipeline = "grid-city"
   )
 }
+# nocov end
 
 check_boundary_date <- function(date, call = rlang::caller_env()) {
   if (rlang::is_string(date)) {
@@ -154,31 +158,18 @@ grid_city_files <- function() {
   )[order(date, files$prefecture_code), ]
 }
 
-#' Name of the target of a file of the crosswalk
+#' Name of the target of a release of the crosswalk
 #'
-#' `grid_city_target_name()` gives the name of the target of a file of
-#' [grid_city_files()] in the bundled pipeline: `N03-20200101_13_GML.zip`
-#' becomes `grid_city_20200101_13`. `grid_city_release_target_name()` gives the
-#' name of the target that binds the files of a release into grid squares of a
-#' size: `2020-01-01` and `"500m"` become `grid_city_20200101_500m`. They are used by the pipeline and by
-#' [grid_city_get()].
+#' `grid_city_release_target_name()` gives the name of the target of the
+#' crosswalk of a release in grid squares of a size in the bundled pipeline:
+#' `2020-01-01` and `"500m"` become `grid_city_20200101_500m`. It is used by the
+#' pipeline and by [grid_city_get()].
 #'
-#' @param file_name Names of files: values of `file_name` in
-#'   [grid_city_files()].
-#' @returns A character vector of target names.
-#' @keywords internal
-#' @export
-#' @examples
-#' grid_city_target_name("N03-20200101_13_GML.zip")
-grid_city_target_name <- function(file_name) {
-  suffix <- sub("^N03-([0-9]{6,8}_[0-9]{2})_GML\\.zip$", "\\1", file_name)
-  paste0("grid_city_", suffix)
-}
-
-#' @rdname grid_city_target_name
 #' @param boundary_date Dates of the boundaries of releases: values of
 #'   `boundary_date` in [grid_city_files()].
 #' @inheritParams grid_city_get
+#' @returns A character vector of target names.
+#' @keywords internal
 #' @export
 #' @examples
 #' grid_city_release_target_name(as.Date("2020-01-01"), "500m")

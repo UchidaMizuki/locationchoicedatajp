@@ -11,7 +11,7 @@ terms of use are on
 \url{https://nlftp.mlit.go.jp/ksj/other/agreement_01.html}.
 }
 \usage{
-land_price_grid_get(year, grid_size = c("500m", "1km"))
+land_price_grid_get(year, grid_size = "500m")
 }
 \arguments{
 \item{year}{Reference year, from 2007 to the latest release. See
@@ -20,9 +20,9 @@ iterate over them, for example with \code{purrr::map()}: the coordinate
 reference system differs between releases, so bind them after making
 it the same.}
 
-\item{grid_size}{The size of the grid squares: \code{"500m"} (the default) or
-\code{"1km"}. Areas of 1 km squares are the sums of the areas of their four 500
-m squares. Both are built and cached for a release on the first call.}
+\item{grid_size}{The size of the grid squares: one of \code{\link[=grid_sizes]{grid_sizes()}},
+\code{"500m"} by default. Each size is built and cached for a release on its
+first call, without rebuilding the others.}
 }
 \value{
 A tibble with one row per grid square and use with at least one
@@ -53,6 +53,9 @@ mean of log prices) is given rather than the arithmetic mean.
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 land_price_grid_get(2020, "1km")
+
+# Coarser squares, where most have several sites
+land_price_grid_get(2020, "10km")
 \dontshow{\}) # examplesIf}
 }
 \seealso{

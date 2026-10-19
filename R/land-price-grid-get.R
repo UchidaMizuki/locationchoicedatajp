@@ -32,9 +32,12 @@
 #' @examplesIf interactive()
 #' land_price_grid_get(2020, "1km")
 #'
+#' # Coarser squares, where most have several sites
+#' land_price_grid_get(2020, "10km")
+#'
 #' @export
-land_price_grid_get <- function(year, grid_size = c("500m", "1km")) {
-  grid_size <- rlang::arg_match(grid_size)
+land_price_grid_get <- function(year, grid_size = "500m") {
+  grid_size <- rlang::arg_match(grid_size, grid_sizes())
   sites <- land_price_get(year)
   land_price_grid_summarise(sites, grid_size)
 }
@@ -69,7 +72,7 @@ land_price_grid_summarise <- function(sites, grid_size) {
 land_price_grid_target <- function(
   name,
   year,
-  grid_size = c("500m", "1km"),
+  grid_size = "500m",
   ...
 ) {
   name <- targets::tar_deparse_language(substitute(name))
@@ -86,12 +89,12 @@ land_price_grid_target <- function(
 land_price_grid_target_raw <- function(
   name,
   year,
-  grid_size = c("500m", "1km"),
+  grid_size = "500m",
   ...
 ) {
   check_string(name)
   check_land_price_year(year)
-  grid_size <- rlang::arg_match(grid_size)
+  grid_size <- rlang::arg_match(grid_size, grid_sizes())
 
   command <- rlang::call2(
     "land_price_grid_get",

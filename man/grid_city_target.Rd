@@ -5,9 +5,9 @@
 \alias{grid_city_target_raw}
 \title{Target of the crosswalk of grid squares to municipalities}
 \usage{
-grid_city_target(name, date, grid_size = c("500m", "1km"), ...)
+grid_city_target(name, date, grid_size = "500m", ...)
 
-grid_city_target_raw(name, date, grid_size = c("500m", "1km"), ...)
+grid_city_target_raw(name, date, grid_size = "500m", ...)
 }
 \arguments{
 \item{name}{Name of the target: a symbol for \code{grid_city_target()}, a string
@@ -20,9 +20,9 @@ date of the table to link, for example October 1 for the Population
 Census and January 1 for 地価公示. See \code{\link[=grid_city_files]{grid_city_files()}} for the
 releases.}
 
-\item{grid_size}{The size of the grid squares: \code{"500m"} (the default) or
-\code{"1km"}. Areas of 1 km squares are the sums of the areas of their four 500
-m squares. Both are built and cached for a release on the first call.}
+\item{grid_size}{The size of the grid squares: one of \code{\link[=grid_sizes]{grid_sizes()}},
+\code{"500m"} by default. Each size is built and cached for a release on its
+first call, without rebuilding the others.}
 
 \item{...}{Other arguments passed to \code{\link[targets:tar_target_raw]{targets::tar_target_raw()}}.}
 }
