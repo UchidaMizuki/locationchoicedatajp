@@ -9,6 +9,7 @@ reference:
   - grid_city_get
   - grid_city_target
   - grid_code
+  - grid_sizes
 - title: Land prices
   contents:
   - land_price_get

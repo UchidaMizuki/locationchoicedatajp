@@ -9,14 +9,14 @@
 #'   as JGD2011 or JGD2000. Their difference is far smaller than a grid square,
 #'   so the coordinates are used as they are.
 #' @inheritParams grid_city_get
-#' @returns A character vector of codes, nine digits for 500 m and eight digits
-#'   for 1 km.
+#' @returns A character vector of codes (see the `grid_code` column of
+#'   [grid_city_get()] for their number of digits).
 #' @export
 #' @examplesIf interactive()
 #' sites <- land_price_get(2020)
 #' sites$grid_code <- grid_code(sites)
-grid_code <- function(x, grid_size = c("500m", "1km")) {
-  grid_size <- rlang::arg_match(grid_size)
+grid_code <- function(x, grid_size = "500m") {
+  grid_size <- rlang::arg_match(grid_size, grid_sizes())
   geometry <- sf::st_geometry(x)
   if (!all(sf::st_geometry_type(geometry) == "POINT")) {
     cli::cli_abort(

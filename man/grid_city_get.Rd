@@ -9,7 +9,7 @@ Land Numerical Information, 行政区域データ (N03):
 \url{https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-2026.html}.
 }
 \usage{
-grid_city_get(date, grid_size = c("500m", "1km"))
+grid_city_get(date, grid_size = "500m")
 }
 \arguments{
 \item{date}{The date of the boundaries: a \code{Date} or a string such as
@@ -19,9 +19,9 @@ date of the table to link, for example October 1 for the Population
 Census and January 1 for 地価公示. See \code{\link[=grid_city_files]{grid_city_files()}} for the
 releases.}
 
-\item{grid_size}{The size of the grid squares: \code{"500m"} (the default) or
-\code{"1km"}. Areas of 1 km squares are the sums of the areas of their four 500
-m squares. Both are built and cached for a release on the first call.}
+\item{grid_size}{The size of the grid squares: one of \code{\link[=grid_sizes]{grid_sizes()}},
+\code{"500m"} by default. Each size is built and cached for a release on its
+first call, without rebuilding the others.}
 }
 \value{
 A tibble with one row per grid square and municipality:
@@ -29,8 +29,9 @@ A tibble with one row per grid square and municipality:
 \item \code{boundary_date}: The date of the boundaries of the release (\code{Date}).
 \item \code{release}: The year of the release in National Land Numerical
 Information (integer).
-\item \code{grid_code}: The code of the grid square (地域メッシュ・コード), nine
-digits for 500 m and eight digits for 1 km.
+\item \code{grid_code}: The code of the grid square (地域メッシュ・コード), with
+four digits for 80 km, six for 10 km, seven for 5 km, eight for 1 km,
+nine for 500 m, ten for 250 m, and eleven for 125 m.
 \item \code{city_code}: Five-digit municipality code, as published in the release.
 Designated cities are split into wards. Land whose municipality is
 undetermined (所属未定地) is \code{NA}.
@@ -46,7 +47,8 @@ share, from the administrative boundaries (行政区域, N03 of National Land
 Numerical Information) in force on a date. It links tables on grid squares
 to tables on municipalities, such as commuting flows. The first call for a
 release downloads its files (via ksjdata, about 370 MB) and builds the
-table, which takes about 45 minutes; it is then cached, and later calls take
+table, which takes about 45 minutes; another size of the same release reuses
+the work and takes minutes. The tables are then cached, and later calls take
 about a second.
 }
 \details{

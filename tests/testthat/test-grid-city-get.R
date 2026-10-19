@@ -3,7 +3,7 @@ test_that("grid_city_files() has the files by prefecture of every release", {
 
   expect_false(anyNA(files$boundary_date))
   expect_all_equal(as.vector(table(files$boundary_date)), 47L)
-  expect_false(anyDuplicated(grid_city_target_name(files$file_name)) > 0)
+  expect_false(anyDuplicated(files$file_name) > 0)
   expect_equal(files$boundary_date, sort(files$boundary_date))
 })
 
@@ -50,16 +50,6 @@ test_that("grid_city_get() errors on an invalid date", {
     grid_city_get(2020)
     grid_city_get("2000-01-01")
   })
-})
-
-test_that("grid_city_target_name() names a target per file", {
-  expect_equal(
-    grid_city_target_name(c(
-      "N03-20200101_13_GML.zip",
-      "N03-101001_01_GML.zip"
-    )),
-    c("grid_city_20200101_13", "grid_city_101001_01")
-  )
 })
 
 test_that("grid_city_release_target_name() names a target per release", {

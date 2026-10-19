@@ -4,20 +4,20 @@
 \alias{grid_code}
 \title{Code of the grid square of points}
 \usage{
-grid_code(x, grid_size = c("500m", "1km"))
+grid_code(x, grid_size = "500m")
 }
 \arguments{
 \item{x}{An \code{sf} object or \code{sfc} of points with longitude and latitude, such
 as JGD2011 or JGD2000. Their difference is far smaller than a grid square,
 so the coordinates are used as they are.}
 
-\item{grid_size}{The size of the grid squares: \code{"500m"} (the default) or
-\code{"1km"}. Areas of 1 km squares are the sums of the areas of their four 500
-m squares. Both are built and cached for a release on the first call.}
+\item{grid_size}{The size of the grid squares: one of \code{\link[=grid_sizes]{grid_sizes()}},
+\code{"500m"} by default. Each size is built and cached for a release on its
+first call, without rebuilding the others.}
 }
 \value{
-A character vector of codes, nine digits for 500 m and eight digits
-for 1 km.
+A character vector of codes (see the \code{grid_code} column of
+\code{\link[=grid_city_get]{grid_city_get()}} for their number of digits).
 }
 \description{
 \code{grid_code()} gives the code of the grid square (地域メッシュ・コード) that
