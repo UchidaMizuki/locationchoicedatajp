@@ -62,3 +62,24 @@ fake_grid_city_areas <- function() {
     area_m2 = c(100, 300, 400, 200)
   )
 }
+
+# A file of the census grid statistics in Shift_JIS, as published: the codes of
+# the columns, their names, and the rows.
+local_census_grid_file <- function(lines, env = parent.frame()) {
+  path <- withr::local_tempfile(fileext = ".txt", .local_envir = env)
+  con <- file(path, open = "w", encoding = "CP932")
+  writeLines(lines, con)
+  close(con)
+  path
+}
+
+# A 500 m table of 2020 with a suppressed square merged into another.
+fake_census_grid_lines <- function() {
+  c(
+    "KEY_CODE,HTKSYORI,HTKSAKI,GASSAN,T001141001,T001141034",
+    ",,,,　人口（総数）,　世帯総数",
+    "533900054,0,,,52,20",
+    "533900064,2,533900073,,3,*",
+    "533900073,1,,533900064,40,15"
+  )
+}

@@ -1,6 +1,7 @@
 # locationchoicedatajp 0.0.0.9000
 
 * Initial package infrastructure (#2).
+* `census_grid_get()` returns the grid square statistics of the Population Census (2010, 2015, and 2020; 1 km, 500 m, and 250 m) as published, with their suppression, `census_grid_tables()` and `census_grid_items()` list their tables and items, and `census_grid_target()` declares them as a target (#7).
 * `grid_city_get()` returns the land area and share of each grid square in each municipality, from the administrative boundaries in force on a date, and `grid_city_target()` declares it as a target (#5).
 * `grid_code()` gives points, such as the sites of `land_price_get()`, the code of their grid square (#5).
 * `grid_sizes()` lists the sizes of grid squares (1 km, 500 m, and 250 m), which every function on grid squares takes without a default. Each size is built on its first call without rebuilding the others (#5).

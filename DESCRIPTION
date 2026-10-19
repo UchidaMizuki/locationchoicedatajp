@@ -27,9 +27,13 @@ Imports:
     tibble,
     utils
 Suggests:
+    curl,
+    fs,
     stringr,
     tarchetypes,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    withr,
+    zip
 Remotes:
     UchidaMizuki/ksjdata,
     UchidaMizuki/tarchives
