@@ -14,9 +14,9 @@
 #' @export
 #' @examplesIf interactive()
 #' sites <- land_price_get(2020)
-#' sites$grid_code <- grid_code(sites)
-grid_code <- function(x, grid_size = "500m") {
-  grid_size <- rlang::arg_match(grid_size, grid_sizes())
+#' sites$grid_code <- grid_code(sites, "500m")
+grid_code <- function(x, grid_size) {
+  grid_size <- check_grid_size(grid_size)
   geometry <- sf::st_geometry(x)
   if (!all(sf::st_geometry_type(geometry) == "POINT")) {
     cli::cli_abort(

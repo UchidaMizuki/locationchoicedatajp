@@ -14,7 +14,7 @@ test_that("grid_city_target() declares a target of grid_city_get()", {
 })
 
 test_that("grid_city_target() depends on the URLs of the release", {
-  target <- grid_city_target_raw("grid_city", "2020-10-01")
+  target <- grid_city_target_raw("grid_city", "2020-10-01", "500m")
   files <- grid_city_files()
   urls <- files$url[files$boundary_date == as.Date("2020-01-01")]
 

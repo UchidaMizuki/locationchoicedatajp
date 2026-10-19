@@ -10,8 +10,9 @@ grid_city_release_target_name(boundary_date, grid_size)
 \item{boundary_date}{Dates of the boundaries of releases: values of
 \code{boundary_date} in \code{\link[=grid_city_files]{grid_city_files()}}.}
 
-\item{grid_size}{The size of the grid squares: one of \code{\link[=grid_sizes]{grid_sizes()}},
-\code{"500m"} by default. Each size is built and cached for a release on its
+\item{grid_size}{The size of the grid squares: one of \code{\link[=grid_sizes]{grid_sizes()}}
+(\code{"1km"}, \code{"500m"}, or \code{"250m"}). There is no default, as the size is a
+choice of the model. Each size is built and cached for a release on its
 first call, without rebuilding the others.}
 }
 \value{
