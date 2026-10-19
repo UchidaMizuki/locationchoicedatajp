@@ -88,10 +88,15 @@ workplaces and commuting flows on municipalities:
 
 - **Grid squares** are the base zones. Their boundaries are fixed, so
   years compare without harmonization; they are nearly equal in size;
-  they nest exactly (1 km, 500 m, 250 m); and the Population Census and
-  the Economic Census publish statistics on them. The default size is
-  500 m, which is fine enough within cities without leaving most squares
-  empty or suppressed (250 m).
+  they nest exactly (80 km, 10 km, 5 km, 1 km, 500 m, 250 m, 125 m, the
+  standard sizes listed by
+  [`grid_sizes()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_sizes.md));
+  and the Population Census and the Economic Census publish statistics
+  on them (1 km, 500 m, and 250 m). The default size is 500 m, which is
+  fine enough within cities without leaving most squares empty or
+  suppressed (250 m). Every function on grid squares takes any of these
+  sizes, and builds each size on its first call without rebuilding the
+  others.
 - **Municipalities** (`city_code`, five digits with the leading zero, as
   published for the reference year, with the wards of designated cities)
   are kept because commuting origin-destination flows are published only
@@ -99,14 +104,13 @@ workplaces and commuting flows on municipalities:
   flows by summing its predictions over the squares of each
   municipality.
 - A crosswalk of grid squares to municipalities, `grid_city_get(date)`,
-  links the two: the land area of each 500 m square in each municipality
-  and its share (about one square in seven straddles a boundary in
-  Tokyo). It is built from the administrative boundaries (N03 of
-  National Land Numerical Information) in force on `date`, so a table is
-  linked with the boundaries of its own reference date (October 1 for
-  the Population Census, January 1 for 地価公示). N03 is released once
-  or twice a year, on irregular dates until 2014 and on January 1 from
-  2015.
+  links the two: the land area of each square in each municipality and
+  its share (about one square in seven straddles a boundary in Tokyo).
+  It is built from the administrative boundaries (N03 of National Land
+  Numerical Information) in force on `date`, so a table is linked with
+  the boundaries of its own reference date (October 1 for the Population
+  Census, January 1 for 地価公示). N03 is released once or twice a year,
+  on irregular dates until 2014 and on January 1 from 2015.
 - Tables with a location (`sf` points) are not given a grid square code:
   [`grid_code()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_code.md)
   assigns points to squares, the same way for every point source.
@@ -191,7 +195,7 @@ Prices are as of January 1 of `year`, in yen per square meter.
   one recorded.
 - Sites cover only some grid squares.
   [`land_price_grid_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/land_price_grid_get.md)
-  summarises them by grid square (500 m or 1 km) and use, as a separate
+  summarises them by grid square (of any size) and use, as a separate
   table: the number of sites, the median, and the geometric mean (prices
   are skewed). Squares without sites have no row. In 2020, 95% of the
   rows at 500 m and 79% at 1 km have a single site, so `n_points` is
@@ -203,22 +207,36 @@ Prices are as of January 1 of `year`, in yen per square meter.
 ### Crosswalk of grid squares to municipalities (`grid_city_get()`)
 
 From 行政区域 (N03 of National Land Numerical Information, read with
-[`ksjdata::ksj_get()`](https://rdrr.io/pkg/ksjdata/man/ksj_get.html)),
-one target per release and prefecture (a release is about 370 MB in 47
-files), and two per release that bind its prefectures into 500 m and 1
-km squares, so that a call reads one target. The first call for a
-release takes about 45 minutes, including the downloads; later calls
-take about a second.
+[`ksjdata::ksj_get()`](https://rdrr.io/pkg/ksjdata/man/ksj_get.html)). A
+release is about 370 MB in 47 files by prefecture. Each release has
+these targets, with dynamic branches over its files:
 
+| Target | Value | Depends on the size |
+|----|----|----|
+| `grid_city_<date>_files` | The files of the release, with their URLs | No |
+| `grid_city_<date>_cities` | The polygons of each file dissolved by municipality (a branch per file) | No |
+| `grid_city_<date>_<size>_areas` | The land area of each square in each municipality (a branch per file) | Yes |
+| `grid_city_<date>_<size>` | The crosswalk of the release, read by [`grid_city_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_city_get.md) | Yes |
+
+- Adding a size to
+  [`grid_sizes()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_sizes.md)
+  adds its targets without rebuilding any other: the dissolved polygons
+  are shared by every size. Branches are named by their data, so a
+  replaced file rebuilds only its own branches.
+- Only the targets of the requested size are built. For 2020, the first
+  call (500 m) took about 45 minutes with the downloads (35 without), a
+  second size took 8 minutes (1 km) or less (10 km, 80 km), as it only
+  cuts the polygons already dissolved, and later calls take about a
+  second. Adding 80 km rebuilt none of the 240 targets and branches
+  already built.
 - The polygons are dissolved by municipality code (`N03_007`, the same
-  column in every release) and cut by the 500 m squares they touch. The
-  cutting is planar in longitude and latitude, in which the squares are
-  rectangles, and the areas are computed in an Albers equal-area
-  projection on the GRS80 ellipsoid. Files without a `.prj` file are set
-  to JGD2000, the datum of the catalog for them.
+  column in every release) and cut by the squares of each size that they
+  touch. The cutting is planar in longitude and latitude, in which the
+  squares are rectangles, and the areas are computed in an Albers
+  equal-area projection on the GRS80 ellipsoid. Files without a `.prj`
+  file are set to JGD2000, the datum of the catalog for them.
 - Shares are computed after binding the prefectures, as squares straddle
-  their borders. 1 km squares sum the areas of their four 500 m squares,
-  whose codes start with the code of the 1 km square.
+  their borders.
 - Checked for 2020: the land area is 377,971 km² (377,975 km² in the
   official survey of areas), 1,902 municipality codes, the shares of
   every square sum to one, and every site of 地価公示 lies in a square

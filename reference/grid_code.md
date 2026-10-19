@@ -10,7 +10,7 @@ they join the tables on grid squares and
 ## Usage
 
 ``` r
-grid_code(x, grid_size = c("500m", "1km"))
+grid_code(x, grid_size = "500m")
 ```
 
 ## Arguments
@@ -23,14 +23,16 @@ grid_code(x, grid_size = c("500m", "1km"))
 
 - grid_size:
 
-  The size of the grid squares: `"500m"` (the default) or `"1km"`. Areas
-  of 1 km squares are the sums of the areas of their four 500 m squares.
-  Both are built and cached for a release on the first call.
+  The size of the grid squares: one of
+  [`grid_sizes()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_sizes.md),
+  `"500m"` by default. Each size is built and cached for a release on
+  its first call, without rebuilding the others.
 
 ## Value
 
-A character vector of codes, nine digits for 500 m and eight digits for
-1 km.
+A character vector of codes (see the `grid_code` column of
+[`grid_city_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_city_get.md)
+for their number of digits).
 
 ## Examples
 

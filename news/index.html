@@ -36,13 +36,15 @@
 <h2 class="pkg-version" data-toc-text="0.0.0.9000" id="locationchoicedatajp-0009000">locationchoicedatajp 0.0.0.9000<a class="anchor" aria-label="anchor" href="#locationchoicedatajp-0009000"></a></h2>
 <ul><li>Initial package infrastructure (<a href="https://github.com/UchidaMizuki/locationchoicedatajp/issues/2" class="external-link">#2</a>).</li>
 <li>
-<code><a href="../reference/grid_city_get.html">grid_city_get()</a></code> returns the land area and share of each 500 m or 1 km grid square in each municipality, from the administrative boundaries in force on a date, and <code><a href="../reference/grid_city_target.html">grid_city_target()</a></code> declares it as a target (<a href="https://github.com/UchidaMizuki/locationchoicedatajp/issues/5" class="external-link">#5</a>).</li>
+<code><a href="../reference/grid_city_get.html">grid_city_get()</a></code> returns the land area and share of each grid square in each municipality, from the administrative boundaries in force on a date, and <code><a href="../reference/grid_city_target.html">grid_city_target()</a></code> declares it as a target (<a href="https://github.com/UchidaMizuki/locationchoicedatajp/issues/5" class="external-link">#5</a>).</li>
 <li>
 <code><a href="../reference/grid_code.html">grid_code()</a></code> gives points, such as the sites of <code><a href="../reference/land_price_get.html">land_price_get()</a></code>, the code of their grid square (<a href="https://github.com/UchidaMizuki/locationchoicedatajp/issues/5" class="external-link">#5</a>).</li>
 <li>
+<code><a href="../reference/grid_sizes.html">grid_sizes()</a></code> lists the standard sizes of grid squares (80 km to 125 m), which every function on grid squares takes. Each size is built on its first call without rebuilding the others (<a href="https://github.com/UchidaMizuki/locationchoicedatajp/issues/5" class="external-link">#5</a>).</li>
+<li>
 <code><a href="../reference/land_price_get.html">land_price_get()</a></code> returns the sites of the official land prices (地価公示) with their location as an <code>sf</code> tibble for every year from 2007, each year from its own release, and <code><a href="../reference/land_price_target.html">land_price_target()</a></code> declares them as a target (<a href="https://github.com/UchidaMizuki/locationchoicedatajp/issues/9" class="external-link">#9</a>).</li>
 <li>
-<code><a href="../reference/land_price_grid_get.html">land_price_grid_get()</a></code> summarises the sites of the land prices by 500 m or 1 km grid square and use (number of sites, median, and geometric mean), and <code><a href="../reference/land_price_grid_target.html">land_price_grid_target()</a></code> declares it as a target (<a href="https://github.com/UchidaMizuki/locationchoicedatajp/issues/9" class="external-link">#9</a>).</li>
+<code><a href="../reference/land_price_grid_get.html">land_price_grid_get()</a></code> summarises the sites of the land prices by grid square and use (number of sites, median, and geometric mean), and <code><a href="../reference/land_price_grid_target.html">land_price_grid_target()</a></code> declares it as a target (<a href="https://github.com/UchidaMizuki/locationchoicedatajp/issues/9" class="external-link">#9</a>).</li>
 </ul></div>
   </main></div>
 

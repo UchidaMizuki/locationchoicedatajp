@@ -9,6 +9,8 @@
   : Target of the crosswalk of grid squares to municipalities
 - [`grid_code()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_code.md)
   : Code of the grid square of points
+- [`grid_sizes()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_sizes.md)
+  : Sizes of grid squares
 
 ## Land prices
 

@@ -8,9 +8,9 @@ release, or the installed version of locationchoicedatajp change.
 ## Usage
 
 ``` r
-grid_city_target(name, date, grid_size = c("500m", "1km"), ...)
+grid_city_target(name, date, grid_size = "500m", ...)
 
-grid_city_target_raw(name, date, grid_size = c("500m", "1km"), ...)
+grid_city_target_raw(name, date, grid_size = "500m", ...)
 ```
 
 ## Arguments
@@ -32,9 +32,10 @@ grid_city_target_raw(name, date, grid_size = c("500m", "1km"), ...)
 
 - grid_size:
 
-  The size of the grid squares: `"500m"` (the default) or `"1km"`. Areas
-  of 1 km squares are the sums of the areas of their four 500 m squares.
-  Both are built and cached for a release on the first call.
+  The size of the grid squares: one of
+  [`grid_sizes()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_sizes.md),
+  `"500m"` by default. Each size is built and cached for a release on
+  its first call, without rebuilding the others.
 
 - ...:
 

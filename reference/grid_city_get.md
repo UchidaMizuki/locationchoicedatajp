@@ -5,13 +5,14 @@ its share, from the administrative boundaries (行政区域, N03 of National
 Land Numerical Information) in force on a date. It links tables on grid
 squares to tables on municipalities, such as commuting flows. The first
 call for a release downloads its files (via ksjdata, about 370 MB) and
-builds the table, which takes about 45 minutes; it is then cached, and
-later calls take about a second.
+builds the table, which takes about 45 minutes; another size of the same
+release reuses the work and takes minutes. The tables are then cached,
+and later calls take about a second.
 
 ## Usage
 
 ``` r
-grid_city_get(date, grid_size = c("500m", "1km"))
+grid_city_get(date, grid_size = "500m")
 ```
 
 ## Source
@@ -34,9 +35,10 @@ Numerical Information, 行政区域データ (N03):
 
 - grid_size:
 
-  The size of the grid squares: `"500m"` (the default) or `"1km"`. Areas
-  of 1 km squares are the sums of the areas of their four 500 m squares.
-  Both are built and cached for a release on the first call.
+  The size of the grid squares: one of
+  [`grid_sizes()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_sizes.md),
+  `"500m"` by default. Each size is built and cached for a release on
+  its first call, without rebuilding the others.
 
 ## Value
 
@@ -47,8 +49,9 @@ A tibble with one row per grid square and municipality:
 - `release`: The year of the release in National Land Numerical
   Information (integer).
 
-- `grid_code`: The code of the grid square (地域メッシュ・コード), nine
-  digits for 500 m and eight digits for 1 km.
+- `grid_code`: The code of the grid square (地域メッシュ・コード), with
+  four digits for 80 km, six for 10 km, seven for 5 km, eight for 1 km,
+  nine for 500 m, ten for 250 m, and eleven for 125 m.
 
 - `city_code`: Five-digit municipality code, as published in the
   release. Designated cities are split into wards. Land whose
