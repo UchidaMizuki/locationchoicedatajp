@@ -8,3 +8,4 @@
 * `grid_sizes()` lists the sizes of grid squares (1 km, 500 m, and 250 m), which every function on grid squares takes without a default. Each size is built on its first call without rebuilding the others (#5).
 * `land_price_get()` returns the sites of the official land prices (地価公示) with their location as an `sf` tibble for every year from 2007, each year from its own release, and `land_price_target()` declares them as a target (#9).
 * `land_price_grid_get()` summarises the sites of the land prices by grid square and use (number of sites, median, and geometric mean), and `land_price_grid_target()` declares it as a target (#9).
+* `prefectural_land_price_get()` returns the sites of the prefectural land price survey (都道府県地価調査) with their location as an `sf` tibble for every year from 2006, each year from its own release, with forest land converted to yen per square meter, and `prefectural_land_price_target()` declares them as a target (#9).

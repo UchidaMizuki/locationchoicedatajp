@@ -1,18 +1,23 @@
 # Helpers of the land price pipeline, sourced by
 # `tarchives::tar_source_archive("locationchoicedatajp")`.
 
-# Targets of the land prices: one per year of `land_price_files()`. The URL is
-# part of the command, so a replaced file rebuilds that year only.
-land_price_pipeline <- function() {
-  files <- locationchoicedatajp::land_price_files()
-  names <- locationchoicedatajp::land_price_target_name(files$year)
+# Targets of land prices: one per year of `files` (`land_price_files()` or
+# `prefectural_land_price_files()`), named `names` and built by the function
+# `build`. The URL is part of the command, so a replaced file rebuilds that
+# year only.
+land_price_pipeline <- function(
+  files = locationchoicedatajp::land_price_files(),
+  names = locationchoicedatajp::land_price_target_name(files$year),
+  build = "land_price_build"
+) {
   tarchetypes::tar_eval(
     targets::tar_target(
       name,
-      land_price_build(year, file_name, url, columns, epsg, n_points)
+      build(year, file_name, url, columns, epsg, n_points)
     ),
     values = list(
       name = rlang::syms(names),
+      build = rlang::syms(rep(build, nrow(files))),
       year = files$year,
       file_name = files$file_name,
       url = files$url,
@@ -76,7 +81,7 @@ land_price_sites <- function(layer, year, columns, epsg) {
     stringr::str_detect(sites$site_number, "^[0-9]{3}$"),
     "site numbers"
   )
-  land_price_check(sites$price_jpy_per_m2 > 0, "prices")
+  land_price_check(sites$price_jpy_per_m2 >= 0, "prices")
 
   geometry <- sf::st_geometry(layer)
   if (is.na(sf::st_crs(geometry))) {
@@ -93,4 +98,21 @@ land_price_check <- function(ok, what) {
       class = "locationchoicedatajp_error_land_price"
     )
   }
+}
+
+# Sites of 都道府県地価調査 (L02). Prices are in yen per square meter, except
+# for forest land (020), which is published in yen per 10 ares (1,000 square
+# meters) and converted.
+prefectural_land_price_build <- function(
+  year,
+  file_name,
+  url,
+  columns,
+  epsg,
+  n_points
+) {
+  sites <- land_price_build(year, file_name, url, columns, epsg, n_points)
+  forest <- sites$use_code == "020"
+  sites$price_jpy_per_m2[forest] <- sites$price_jpy_per_m2[forest] / 1000
+  sites
 }

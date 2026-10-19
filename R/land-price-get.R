@@ -79,9 +79,13 @@ land_price_get_archive <- function(year) {
 }
 # nocov end
 
-check_land_price_year <- function(year, call = rlang::caller_env()) {
+check_land_price_year <- function(
+  year,
+  files = land_price_files(),
+  call = rlang::caller_env()
+) {
   check_number_whole(year, call = call)
-  years <- land_price_files()$year
+  years <- files$year
   if (!year %in% years) {
     cli::cli_abort(
       c(
@@ -94,9 +98,9 @@ check_land_price_year <- function(year, call = rlang::caller_env()) {
   }
 }
 
-land_price_inform_terms <- function() {
+land_price_inform_terms <- function(dataset_code = "L01") {
   files <- ksjdata::ksj_available
-  file <- files[files$dataset_code == "L01", ][1, ]
+  file <- files[files$dataset_code == dataset_code, ][1, ]
   cli::cli_inform(
     c(
       "Terms of use of {file$dataset_code} ({file$dataset_name}): {file$license_name}",
@@ -104,7 +108,7 @@ land_price_inform_terms <- function() {
       i = "{.url {file$license_url}}"
     ),
     .frequency = "once",
-    .frequency_id = "locationchoicedatajp_terms_l01"
+    .frequency_id = paste0("locationchoicedatajp_terms_", dataset_code)
   )
 }
 
@@ -126,9 +130,14 @@ land_price_inform_terms <- function() {
 #' @examples
 #' land_price_files()
 land_price_files <- function() {
+  land_price_read_files("land-price")
+}
+
+# The files of a pipeline of land prices, with their URLs in ksjdata.
+land_price_read_files <- function(pipeline) {
   path <- system.file(
     "tarchives",
-    "land-price",
+    pipeline,
     "columns.csv",
     package = "locationchoicedatajp"
   )
