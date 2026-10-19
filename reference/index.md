@@ -40,3 +40,8 @@
 - [`land_price_grid_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/land_price_grid_target.md)
   [`land_price_grid_target_raw()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/land_price_grid_target.md)
   : Target of land prices summarised by grid square
+- [`prefectural_land_price_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/prefectural_land_price_get.md)
+  : Get prefectural land prices
+- [`prefectural_land_price_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/prefectural_land_price_target.md)
+  [`prefectural_land_price_target_raw()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/prefectural_land_price_target.md)
+  : Target of prefectural land prices

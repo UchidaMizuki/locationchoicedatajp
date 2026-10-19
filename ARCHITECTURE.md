@@ -208,8 +208,15 @@ Prices are as of January 1 of `year`, in yen per square meter.
   rows at 500 m and 79% at 1 km have a single site, so `n_points` is
   always given. An interpolated surface for squares without sites is
   planned as another separate table.
-- 都道府県地価調査 (L02, as of July 1) is planned as a second, separate
-  source.
+- 都道府県地価調査 (L02, as of July 1) is a separate source,
+  [`prefectural_land_price_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/prefectural_land_price_get.md),
+  with the same columns, from its nationwide files of 2006 onward. It
+  shares the pipeline helpers, with its own
+  `inst/tarchives/prefectural-land-price/columns.csv` (written by the
+  same script) and a build function that converts forest land (020),
+  published in yen per 10 ares, to yen per square meter. Its files until
+  2010 name their columns as L01. One site in 2008 has a price of 0,
+  kept as published, so prices are checked to be non-negative.
 
 ### Crosswalk of grid squares to municipalities (`grid_city_get()`)
 

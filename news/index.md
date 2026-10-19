@@ -53,3 +53,11 @@
   [`land_price_grid_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/land_price_grid_target.md)
   declares it as a target
   ([\#9](https://github.com/UchidaMizuki/locationchoicedatajp/issues/9)).
+- [`prefectural_land_price_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/prefectural_land_price_get.md)
+  returns the sites of the prefectural land price survey
+  (都道府県地価調査) with their location as an `sf` tibble for every
+  year from 2006, each year from its own release, with forest land
+  converted to yen per square meter, and
+  [`prefectural_land_price_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/prefectural_land_price_target.md)
+  declares them as a target
+  ([\#9](https://github.com/UchidaMizuki/locationchoicedatajp/issues/9)).
