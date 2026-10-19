@@ -87,3 +87,35 @@ test_that("land_price_columns() lists the columns of each release", {
     )
   )
 })
+
+test_that("prefectural_land_price_build() converts forest land to square meters", {
+  helpers <- pipeline_helpers()
+  helpers$land_price_build <- function(...) {
+    tibble::tibble(use_code = c("000", "020"), price_jpy_per_m2 = c(1000, 5000))
+  }
+  sites <- helpers$prefectural_land_price_build()
+
+  expect_equal(sites$price_jpy_per_m2, c(1000, 5))
+})
+
+test_that("land_price_pipeline() builds each year with its function", {
+  helpers <- pipeline_helpers()
+  official <- helpers$land_price_pipeline()
+  files <- prefectural_land_price_files()
+  prefectural <- helpers$land_price_pipeline(
+    files = files,
+    names = prefectural_land_price_target_name(files$year),
+    build = "prefectural_land_price_build"
+  )
+
+  expect_equal(official[[1]]$settings$name, "land_price_2007")
+  expect_equal(
+    as.character(official[[1]]$command$expr[[1]][[1]]),
+    "land_price_build"
+  )
+  expect_equal(prefectural[[1]]$settings$name, "prefectural_land_price_2006")
+  expect_equal(
+    as.character(prefectural[[1]]$command$expr[[1]][[1]]),
+    "prefectural_land_price_build"
+  )
+})
