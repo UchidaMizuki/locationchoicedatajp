@@ -72,6 +72,7 @@ grid_city_get <- function(date, grid_size = "500m") {
   )
 }
 
+# nocov start
 grid_city_get_archive <- function(boundary_date, grid_size) {
   tarchives::tar_get_archive_raw(
     name = grid_city_release_target_name(boundary_date, grid_size),
@@ -79,6 +80,7 @@ grid_city_get_archive <- function(boundary_date, grid_size) {
     pipeline = "grid-city"
   )
 }
+# nocov end
 
 check_boundary_date <- function(date, call = rlang::caller_env()) {
   if (rlang::is_string(date)) {

@@ -47,3 +47,22 @@ test_that("land_price_grid_target() declares a target of land_price_grid_get()",
     )
   )
 })
+
+test_that("land_price_grid_get() summarises the sites of the year", {
+  local_mocked_bindings(
+    land_price_get = function(year) {
+      sf::st_sf(
+        year = year,
+        release = year,
+        use_code = "000",
+        price_jpy_per_m2 = 100,
+        geometry = sf::st_sfc(sf::st_point(c(139.701, 35.691)), crs = 6668)
+      )
+    }
+  )
+  data <- land_price_grid_get(2020, "1km")
+
+  expect_equal(data$year, 2020)
+  expect_equal(data$grid_code, "53394526")
+  expect_equal(data$n_points, 1L)
+})

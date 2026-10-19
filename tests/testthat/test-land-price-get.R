@@ -21,3 +21,10 @@ test_that("land_price_target_name() names a target per year", {
     c("land_price_2010", "land_price_2020")
   )
 })
+
+test_that("land_price_get() reads the sites of the year with their terms", {
+  local_mocked_bindings(land_price_get_archive = \(year) paste("sites", year))
+
+  expect_message(sites <- land_price_get(2020), "Terms of use of L01")
+  expect_equal(sites, "sites 2020")
+})
