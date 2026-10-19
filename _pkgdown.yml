@@ -4,6 +4,11 @@ template:
   bootstrap: 5
 
 reference:
+- title: Population Census
+  contents:
+  - census_grid_get
+  - census_grid_tables
+  - census_grid_target
 - title: Zones
   contents:
   - grid_city_get
