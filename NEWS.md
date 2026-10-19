@@ -1,6 +1,7 @@
 # locationchoicedatajp 0.0.0.9000
 
 * Initial package infrastructure (#2).
+* `census_commuting_get()` returns the flows of employed persons or students between municipalities from the Population Census of 2020, by sex and place of work or school (at home, outside the home, another municipality, unknown), with zero flows kept, and `census_commuting_target()` declares them as a target (#6).
 * `census_grid_get()` returns the grid square statistics of the Population Census (2010, 2015, and 2020; 1 km, 500 m, and 250 m) as published, with their suppression, `census_grid_tables()` and `census_grid_items()` list their tables and items, and `census_grid_target()` declares them as a target (#7).
 * `grid_city_get()` returns the land area and share of each grid square in each municipality, from the administrative boundaries in force on a date, and `grid_city_target()` declares it as a target (#5).
 * `grid_code()` gives points, such as the sites of `land_price_get()`, the code of their grid square (#5).

@@ -83,3 +83,26 @@ fake_census_grid_lines <- function() {
     "533900073,1,,533900064,40,15"
   )
 }
+
+# Cells of the commuting table as collected for two origins of a prefecture,
+# `13101` and `13102`, with a third municipality, `13103`, as a destination, and
+# the total of the prefecture (`13000`) among the destinations.
+fake_census_commuting_cells <- function() {
+  tibble::tribble(
+    ~origin_city_code , ~sex_code , ~place_code , ~destination_city_code , ~value ,
+    "13101"           , "1"       , "011"       , "00000"                , "5"    ,
+    "13101"           , "1"       , "012"       , "00000"                , "20"   ,
+    "13101"           , "1"       , "02"        , "13101"                , "2"    ,
+    "13101"           , "1"       , "02"        , "13102"                , "30"   ,
+    "13101"           , "1"       , "02"        , "13103"                , "-"    ,
+    "13101"           , "1"       , "024"       , "00000"                , "2"    ,
+    "13101"           , "1"       , "03"        , "00000"                , "1"    ,
+    "13102"           , "2"       , "011"       , "00000"                , "1"    ,
+    "13102"           , "2"       , "012"       , "00000"                , "4"    ,
+    "13102"           , "2"       , "02"        , "13101"                , "6"    ,
+    "13102"           , "2"       , "02"        , "13102"                , "-"    ,
+    "13102"           , "2"       , "02"        , "13103"                , "3"    ,
+    "13102"           , "2"       , "024"       , "00000"                , "-"    ,
+    "13102"           , "2"       , "03"        , "00000"                , "2"
+  )
+}
