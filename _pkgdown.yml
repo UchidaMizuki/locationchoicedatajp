@@ -6,6 +6,8 @@ template:
 reference:
 - title: Population Census
   contents:
+  - census_commuting_get
+  - census_commuting_target
   - census_grid_get
   - census_grid_tables
   - census_grid_target
