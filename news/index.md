@@ -4,6 +4,14 @@
 
 - Initial package infrastructure
   ([\#2](https://github.com/UchidaMizuki/locationchoicedatajp/issues/2)).
+- [`census_commuting_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_commuting_get.md)
+  returns the flows of employed persons or students between
+  municipalities from the Population Census of 2020, by sex and place of
+  work or school (at home, outside the home, another municipality,
+  unknown), with zero flows kept, and
+  [`census_commuting_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_commuting_target.md)
+  declares them as a target
+  ([\#6](https://github.com/UchidaMizuki/locationchoicedatajp/issues/6)).
 - [`census_grid_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_grid_get.md)
   returns the grid square statistics of the Population Census (2010,
   2015, and 2020; 1 km, 500 m, and 250 m) as published, with their
