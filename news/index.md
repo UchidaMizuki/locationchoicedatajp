@@ -4,6 +4,13 @@
 
 - Initial package infrastructure
   ([\#2](https://github.com/UchidaMizuki/locationchoicedatajp/issues/2)).
+- [`census_city_centroid_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_city_centroid_get.md)
+  returns the population centroids of municipalities published by the
+  Statistics Bureau for 2015 and 2020 as `sf` points, the representative
+  points for distances, and
+  [`census_city_centroid_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_city_centroid_target.md)
+  declares them as a target
+  ([\#8](https://github.com/UchidaMizuki/locationchoicedatajp/issues/8)).
 - [`census_commuting_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_commuting_get.md)
   returns the flows of employed persons or students between
   municipalities from the Population Census of 2020, by sex and place of

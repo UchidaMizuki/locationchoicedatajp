@@ -2,6 +2,11 @@
 
 ## Population Census
 
+- [`census_city_centroid_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_city_centroid_get.md)
+  : Get population centroids of municipalities
+- [`census_city_centroid_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_city_centroid_target.md)
+  [`census_city_centroid_target_raw()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_city_centroid_target.md)
+  : Target of population centroids of municipalities
 - [`census_commuting_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_commuting_get.md)
   : Get commuting flows of the Population Census
 - [`census_commuting_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_commuting_target.md)

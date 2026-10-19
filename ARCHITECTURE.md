@@ -345,3 +345,29 @@ and purpose is listed in `inst/tarchives/census-commuting/tables.csv`.
   the wards of designated cities in separate tables, and include work at
   home in the flows within the municipality. They are planned, with
   checks that the two tables agree.
+
+### Population centroids of municipalities (`census_city_centroid_get()`)
+
+The representative points of municipalities, for distances and travel
+times (#8): the population centroids (人口重心) published by the
+Statistics Bureau for 2015 and 2020, from workbooks listed in
+`inst/tarchives/census-city-centroid/files.csv` with how their angles
+are written (decimal degrees in 2020, DDDMMSS.ss in 2015).
+
+- A centroid is the mean of the centres of the basic unit blocks
+  weighted by their population, in JGD2000 (stated in 2020, and set the
+  same in 2015). Rows of the country and the prefectures are dropped;
+  designated cities keep a row for the whole city and one per ward, as
+  published.
+- Municipalities without residents have no centroid, which the workbook
+  marks with a note on their name; any other missing centroid is an
+  error.
+- Checked for 2020: 1,916 rows (the 1,896 municipalities of the
+  commuting flows except 双葉町, and 21 whole cities), and 1,887 of the
+  1,895 centroids of municipalities lie in a 1 km square of their own
+  municipality; the others are of islands or coasts (小笠原村, 三島村,
+  十島村, …).
+- Distances between centroids, or from grid squares
+  ([`grid_code()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_code.md),
+  `jpgrid`), are computed from these points when a model needs them;
+  travel times on networks are planned.
