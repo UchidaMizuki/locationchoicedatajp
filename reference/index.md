@@ -1,5 +1,16 @@
 # Package index
 
+## Population Census
+
+- [`census_grid_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_grid_get.md)
+  : Get grid square statistics of the Population Census
+- [`census_grid_tables()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_grid_tables.md)
+  [`census_grid_items()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_grid_tables.md)
+  : Tables of the grid square statistics of the Population Census
+- [`census_grid_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_grid_target.md)
+  [`census_grid_target_raw()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_grid_target.md)
+  : Target of grid square statistics of the Population Census
+
 ## Zones
 
 - [`grid_city_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_city_get.md)

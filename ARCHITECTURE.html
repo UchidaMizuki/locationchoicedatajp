@@ -164,6 +164,18 @@
 <li>Checked for 2020: the land area is 377,971 km² (377,975 km² in the official survey of areas), 1,902 municipality codes, the shares of every square sum to one, and every site of 地価公示 lies in a square of its own municipality.</li>
 <li>Areas are of land within the administrative boundaries. Land whose municipality is undetermined (所属未定地) is kept, with <code>city_code</code> <code>NA</code>, so that the shares of every square sum to one.</li>
 </ul></div>
+<div class="section level3">
+<h3 id="census-grid-statistics-census_grid_get">Census grid statistics (<code>census_grid_get()</code>)<a class="anchor" aria-label="anchor" href="#census-grid-statistics-census_grid_get"></a></h3>
+<p>From the grid square statistics of the Population Census (地域メッシュ統計, 00200511) on e-Stat, downloaded as files by primary grid square (80 km) from its statistical GIS, without an API key. They are not in the e-Stat API.</p>
+<ul><li>
+<code>inst/tarchives/census-grid/tables.csv</code> lists the tables (one per year, size, and table number) and <code>items.csv</code> their items, read from the definitions of the tables (<code>downloaddata/&lt;stats_id&gt;.pdf</code>) by <code>data-raw/census_grid_tables.R</code>. e-Stat lists the tables only in a page built by JavaScript, so their identifiers are listed by hand in the script, which checks the rest. <code>primary_grids.csv</code> lists the 176 primary squares with land, from the crosswalk of 2020.</li>
+<li>The years differ in what they publish: 2010 has only population by sex and households (and 250 m only for 東京都特別区部, designated cities, and prefectural capitals); 2015 and 2020 have population by age, households by size and type, and, in separate tables, labour force and commuting.</li>
+<li>A table is wide, one row per square and one column per item, named by its published code: a nationwide 500 m table has about half a million squares and up to 94 items, which would be tens of millions of rows in long form. Names and units are in <code><a href="reference/census_grid_tables.html">census_grid_items()</a></code>, as the attribute table of ksjdata.</li>
+<li>Each table has a target per primary square (a dynamic branch; e-Stat answers 404 for squares without residents, which give no rows) and a target that binds them. Every file is checked against the definition of its table (columns, digits of the codes, integer values).</li>
+<li>Suppression is kept as published: <code>suppression_code</code> (0, 1 for a square that includes suppressed squares, 2 for a suppressed square) and <code>merged_into_grid_code</code>. The list of squares merged into a square (<code>GASSAN</code>) is dropped, as it follows from <code>merged_into_grid_code</code>. Suppressed values are <code>NA</code>.</li>
+<li>e-Stat sometimes answers a run of requests with a page or a broken archive, so a download is retried until it is an archive of one file.</li>
+<li>Checked for the 500 m tables of 001-01: the population of the squares sums to the published national population in 2010 (128,057,352), 2015 (127,094,745), and 2020 (126,146,099). About a quarter of the squares are suppressed in 2015 and 2020 (109,336 of 466,145 in 2020). A table takes 4 to 8 minutes on its first call and about half a second later.</li>
+</ul></div>
 </div>
 </div>
 

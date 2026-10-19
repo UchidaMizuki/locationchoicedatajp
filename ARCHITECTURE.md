@@ -251,3 +251,45 @@ these targets, with dynamic branches over its files:
 - Areas are of land within the administrative boundaries. Land whose
   municipality is undetermined (所属未定地) is kept, with `city_code`
   `NA`, so that the shares of every square sum to one.
+
+### Census grid statistics (`census_grid_get()`)
+
+From the grid square statistics of the Population Census
+(地域メッシュ統計, 00200511) on e-Stat, downloaded as files by primary
+grid square (80 km) from its statistical GIS, without an API key. They
+are not in the e-Stat API.
+
+- `inst/tarchives/census-grid/tables.csv` lists the tables (one per
+  year, size, and table number) and `items.csv` their items, read from
+  the definitions of the tables (`downloaddata/<stats_id>.pdf`) by
+  `data-raw/census_grid_tables.R`. e-Stat lists the tables only in a
+  page built by JavaScript, so their identifiers are listed by hand in
+  the script, which checks the rest. `primary_grids.csv` lists the 176
+  primary squares with land, from the crosswalk of 2020.
+- The years differ in what they publish: 2010 has only population by sex
+  and households (and 250 m only for 東京都特別区部, designated cities,
+  and prefectural capitals); 2015 and 2020 have population by age,
+  households by size and type, and, in separate tables, labour force and
+  commuting.
+- A table is wide, one row per square and one column per item, named by
+  its published code: a nationwide 500 m table has about half a million
+  squares and up to 94 items, which would be tens of millions of rows in
+  long form. Names and units are in
+  [`census_grid_items()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_grid_tables.md),
+  as the attribute table of ksjdata.
+- Each table has a target per primary square (a dynamic branch; e-Stat
+  answers 404 for squares without residents, which give no rows) and a
+  target that binds them. Every file is checked against the definition
+  of its table (columns, digits of the codes, integer values).
+- Suppression is kept as published: `suppression_code` (0, 1 for a
+  square that includes suppressed squares, 2 for a suppressed square)
+  and `merged_into_grid_code`. The list of squares merged into a square
+  (`GASSAN`) is dropped, as it follows from `merged_into_grid_code`.
+  Suppressed values are `NA`.
+- e-Stat sometimes answers a run of requests with a page or a broken
+  archive, so a download is retried until it is an archive of one file.
+- Checked for the 500 m tables of 001-01: the population of the squares
+  sums to the published national population in 2010 (128,057,352), 2015
+  (127,094,745), and 2020 (126,146,099). About a quarter of the squares
+  are suppressed in 2015 and 2020 (109,336 of 466,145 in 2020). A table
+  takes 4 to 8 minutes on its first call and about half a second later.

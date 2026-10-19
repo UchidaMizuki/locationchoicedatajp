@@ -4,6 +4,17 @@
 
 - Initial package infrastructure
   ([\#2](https://github.com/UchidaMizuki/locationchoicedatajp/issues/2)).
+- [`census_grid_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_grid_get.md)
+  returns the grid square statistics of the Population Census (2010,
+  2015, and 2020; 1 km, 500 m, and 250 m) as published, with their
+  suppression,
+  [`census_grid_tables()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_grid_tables.md)
+  and
+  [`census_grid_items()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_grid_tables.md)
+  list their tables and items, and
+  [`census_grid_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_grid_target.md)
+  declares them as a target
+  ([\#7](https://github.com/UchidaMizuki/locationchoicedatajp/issues/7)).
 - [`grid_city_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_city_get.md)
   returns the land area and share of each grid square in each
   municipality, from the administrative boundaries in force on a date,
