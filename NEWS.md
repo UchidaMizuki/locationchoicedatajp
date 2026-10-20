@@ -11,3 +11,4 @@
 * `land_price_get()` returns the sites of the official land prices (地価公示) with their location as an `sf` tibble for every year from 2007, each year from its own release, and `land_price_target()` declares them as a target (#9).
 * `land_price_grid_get()` summarises the sites of the land prices by grid square and use (number of sites, median, and geometric mean), and `land_price_grid_target()` declares it as a target (#9).
 * `prefectural_land_price_get()` returns the sites of the prefectural land price survey (都道府県地価調査) with their location as an `sf` tibble for every year from 2006, each year from its own release, with forest land converted to yen per square meter, and `prefectural_land_price_target()` declares them as a target (#9).
+* `rail_station_get()` returns the railway stations of National Land Numerical Information (鉄道, N02) for 2006 to 2008 and 2011 onward as `sf` lines, as published, and `rail_station_target()` declares them as a target (#10).
