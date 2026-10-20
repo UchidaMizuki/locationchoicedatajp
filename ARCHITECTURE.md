@@ -168,11 +168,24 @@ Known limits of grid squares, and how they are handled:
 
 ## Terms of use
 
-Each getter shows the terms of use of its sources the first time it is
-called in a session, as ksjdata does, and documents them under
-`@source`. A registry of sources with their attribution text (issue \#4)
-is added with the second source family (the Population Census), when
-there is more than one kind of terms to collect.
+[`data_sources()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/data_sources.md)
+is the registry of sources: one row per getter, with its publisher,
+terms, and a line of attribution, from `inst/sources.csv`.
+[`data_attribution()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/data_sources.md)
+gives the lines of the getters used.
+
+- The terms of National Land Numerical Information are taken from
+  ksjdata at run time, so they follow its catalog (they differ by
+  release for L01 and L02); their names and lines of attribution are in
+  the CSV, as code in `R/` holds Japanese only as escapes.
+- Every getter shows the terms of its source once per session
+  (`inform_terms()`), from the registry, and documents them under
+  `@source`.
+- The lines say that the data were processed (加工して作成), as every
+  source asks, since the tables are reshaped, renamed, and converted.
+  Their form follows each publisher:
+  「国土数値情報（…）」（国土交通省）, 政府統計の総合窓口(e-Stat), and
+  総務省統計局ホームページ.
 
 ## Tables
 

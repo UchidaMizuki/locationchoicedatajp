@@ -12,8 +12,24 @@ and zone attributes, all keyed by the same zones.
   only once.
 - Each table records its source and terms of use.
 
-The package is at an early stage, and no tables are available yet. See
-the
+Residential location is modelled on grid squares (1 km, 500 m, or 250
+m), and workplaces and commuting flows on municipalities. Every table
+has a reference year (`year`) and the release it is taken from
+(`release`), and returns observations as published. The tables so far:
+
+| Getter | Table | Years |
+|----|----|----|
+| [`census_grid_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_grid_get.md) | Population and households by grid square (Population Census) | 2010, 2015, 2020 |
+| [`census_commuting_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_commuting_get.md) | Commuting flows between municipalities by sex and place of work or school | 2020 |
+| [`census_city_centroid_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_city_centroid_get.md) | Population centroids of municipalities | 2015, 2020 |
+| [`grid_city_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_city_get.md) | Land area and share of each grid square in each municipality | 2007– |
+| [`land_price_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/land_price_get.md), [`prefectural_land_price_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/prefectural_land_price_get.md) | Sites of 地価公示 and 都道府県地価調査 | 2007–, 2006– |
+| [`land_price_grid_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/land_price_grid_get.md) | Land prices summarised by grid square | 2007– |
+
+Most tables are built on their first call, which downloads them;
+[`census_commuting_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_commuting_get.md)
+needs an e-Stat API key in `ESTAT_API_KEY`. The package is at an early
+stage: see the
 [roadmap](https://github.com/UchidaMizuki/locationchoicedatajp/issues/1).
 
 ## Installation
@@ -29,18 +45,30 @@ pak::pak("UchidaMizuki/locationchoicedatajp")
 
 ## Terms of use
 
-The data come from their primary sources, each with its own terms. Most
-are published under the Public Data License (Version 1.0) of the
-Government of Japan, which is compatible with CC BY 4.0. Published or
-processed data must credit the source, and processed data must say that
-they were processed.
+The data come from their primary sources, each with its own terms,
+compatible with CC BY 4.0 (some older releases of National Land
+Numerical Information allow commercial use without being CC BY 4.0).
+Published or processed data must credit the source, and processed data
+must say that they were processed.
 
+- [`data_sources()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/data_sources.md)
+  lists the source and terms of every getter, and each getter shows them
+  the first time it is called in a session.
+- [`data_attribution()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/data_sources.md)
+  gives the lines to credit the sources of the getters used, for example
+  `data_attribution(c("census_commuting_get", "land_price_get"))`.
 - Complying with the terms is up to you. This package does not give
   legal advice.
 - The MIT license of this package applies to its code only, not to the
   data.
 
 # Package index
+
+## Sources
+
+- [`data_sources()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/data_sources.md)
+  [`data_attribution()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/data_sources.md)
+  : Sources of the tables
 
 ## Population Census
 

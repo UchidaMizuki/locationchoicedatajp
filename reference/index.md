@@ -1,5 +1,11 @@
 # Package index
 
+## Sources
+
+- [`data_sources()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/data_sources.md)
+  [`data_attribution()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/data_sources.md)
+  : Sources of the tables
+
 ## Population Census
 
 - [`census_city_centroid_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_city_centroid_get.md)

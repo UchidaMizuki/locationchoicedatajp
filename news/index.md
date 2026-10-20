@@ -30,6 +30,12 @@
   [`census_grid_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/census_grid_target.md)
   declares them as a target
   ([\#7](https://github.com/UchidaMizuki/locationchoicedatajp/issues/7)).
+- [`data_sources()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/data_sources.md)
+  lists the source, publisher, and terms of use of every getter, and
+  [`data_attribution()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/data_sources.md)
+  gives the lines to credit the sources of the getters used; every
+  getter shows its terms from this registry
+  ([\#4](https://github.com/UchidaMizuki/locationchoicedatajp/issues/4)).
 - [`grid_city_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_city_get.md)
   returns the land area and share of each grid square in each
   municipality, from the administrative boundaries in force on a date,

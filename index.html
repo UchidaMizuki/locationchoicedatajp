@@ -56,7 +56,54 @@
 <li>Data are not bundled. Each table is downloaded from its primary source and built on demand by a <a href="https://docs.ropensci.org/targets/" class="external-link">targets</a> pipeline bundled with the package, and cached by <a href="https://github.com/UchidaMizuki/tarchives" class="external-link">tarchives</a>, so it is built only once.</li>
 <li>Each table records its source and terms of use.</li>
 </ul>
-<p>The package is at an early stage, and no tables are available yet. See the <a href="https://github.com/UchidaMizuki/locationchoicedatajp/issues/1" class="external-link">roadmap</a>.</p>
+<p>Residential location is modelled on grid squares (1 km, 500 m, or 250 m), and workplaces and commuting flows on municipalities. Every table has a reference year (<code>year</code>) and the release it is taken from (<code>release</code>), and returns observations as published. The tables so far:</p>
+<table class="table">
+<colgroup>
+<col width="33%">
+<col width="33%">
+<col width="33%">
+</colgroup>
+<thead><tr>
+<th>Getter</th>
+<th>Table</th>
+<th>Years</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code><a href="reference/census_grid_get.html">census_grid_get()</a></code></td>
+<td>Population and households by grid square (Population Census)</td>
+<td>2010, 2015, 2020</td>
+</tr>
+<tr>
+<td><code><a href="reference/census_commuting_get.html">census_commuting_get()</a></code></td>
+<td>Commuting flows between municipalities by sex and place of work or school</td>
+<td>2020</td>
+</tr>
+<tr>
+<td><code><a href="reference/census_city_centroid_get.html">census_city_centroid_get()</a></code></td>
+<td>Population centroids of municipalities</td>
+<td>2015, 2020</td>
+</tr>
+<tr>
+<td><code><a href="reference/grid_city_get.html">grid_city_get()</a></code></td>
+<td>Land area and share of each grid square in each municipality</td>
+<td>2007–</td>
+</tr>
+<tr>
+<td>
+<code><a href="reference/land_price_get.html">land_price_get()</a></code>, <code><a href="reference/prefectural_land_price_get.html">prefectural_land_price_get()</a></code>
+</td>
+<td>Sites of 地価公示 and 都道府県地価調査</td>
+<td>2007–, 2006–</td>
+</tr>
+<tr>
+<td><code><a href="reference/land_price_grid_get.html">land_price_grid_get()</a></code></td>
+<td>Land prices summarised by grid square</td>
+<td>2007–</td>
+</tr>
+</tbody>
+</table>
+<p>Most tables are built on their first call, which downloads them; <code><a href="reference/census_commuting_get.html">census_commuting_get()</a></code> needs an e-Stat API key in <code>ESTAT_API_KEY</code>. The package is at an early stage: see the <a href="https://github.com/UchidaMizuki/locationchoicedatajp/issues/1" class="external-link">roadmap</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -68,8 +115,12 @@
 <div class="section level2">
 <h2 id="terms-of-use">Terms of use<a class="anchor" aria-label="anchor" href="#terms-of-use"></a>
 </h2>
-<p>The data come from their primary sources, each with its own terms. Most are published under the Public Data License (Version 1.0) of the Government of Japan, which is compatible with CC BY 4.0. Published or processed data must credit the source, and processed data must say that they were processed.</p>
+<p>The data come from their primary sources, each with its own terms, compatible with CC BY 4.0 (some older releases of National Land Numerical Information allow commercial use without being CC BY 4.0). Published or processed data must credit the source, and processed data must say that they were processed.</p>
 <ul>
+<li>
+<code><a href="reference/data_sources.html">data_sources()</a></code> lists the source and terms of every getter, and each getter shows them the first time it is called in a session.</li>
+<li>
+<code><a href="reference/data_sources.html">data_attribution()</a></code> gives the lines to credit the sources of the getters used, for example <code>data_attribution(c("census_commuting_get", "land_price_get"))</code>.</li>
 <li>Complying with the terms is up to you. This package does not give legal advice.</li>
 <li>The MIT license of this package applies to its code only, not to the data.</li>
 </ul>
