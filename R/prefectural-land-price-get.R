@@ -52,7 +52,7 @@
 #' @export
 prefectural_land_price_get <- function(year) {
   check_land_price_year(year, prefectural_land_price_files())
-  land_price_inform_terms("L02")
+  inform_terms("prefectural_land_price_get")
   prefectural_land_price_get_archive(year)
 }
 

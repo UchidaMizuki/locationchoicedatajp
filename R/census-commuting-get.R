@@ -70,7 +70,7 @@
 #' @export
 census_commuting_get <- function(year, purpose) {
   table <- check_census_commuting_table(year, purpose)
-  census_commuting_inform_terms()
+  inform_terms("census_commuting_get")
   data <- census_commuting_get_archive(table$year, table$purpose)
   dplyr::mutate(data, year = table$year, release = table$year, .before = 1)
 }
@@ -107,17 +107,6 @@ check_census_commuting_table <- function(
     )
   }
   table
-}
-
-census_commuting_inform_terms <- function() {
-  cli::cli_inform(
-    c(
-      "Terms of use of the Population Census: the terms of use of e-Stat, based on the Standard Terms of Use of the Government of Japan (Version 2.0) and compatible with CC BY 4.0.",
-      i = "{.url https://www.e-stat.go.jp/terms-of-use}"
-    ),
-    .frequency = "once",
-    .frequency_id = "locationchoicedatajp_terms_census"
-  )
 }
 
 #' Tables of the commuting flows of the Population Census

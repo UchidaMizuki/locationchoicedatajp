@@ -12,7 +12,7 @@ test_that("census_city_centroid_get() reads the centroids with their terms", {
 
   expect_message(
     centroids <- census_city_centroid_get(2020),
-    "Terms of use of the Statistics Bureau"
+    "Terms of use of 人口重心"
   )
   expect_equal(centroids, "centroids 2020")
 })

@@ -54,7 +54,7 @@
 #' @export
 census_grid_get <- function(year, grid_size, table_code) {
   table <- check_census_grid_table(year, grid_size, table_code)
-  census_grid_inform_terms()
+  inform_terms("census_grid_get")
   data <- census_grid_get_archive(table$stats_id)
   dplyr::mutate(data, year = table$year, release = table$year, .before = 1)
 }
@@ -98,17 +98,6 @@ check_census_grid_table <- function(
     )
   }
   table
-}
-
-census_grid_inform_terms <- function() {
-  cli::cli_inform(
-    c(
-      "Terms of use of the grid square statistics of the Population Census: the terms of use of e-Stat, based on the Standard Terms of Use of the Government of Japan (Version 2.0) and compatible with CC BY 4.0.",
-      i = "{.url https://www.e-stat.go.jp/terms-of-use}"
-    ),
-    .frequency = "once",
-    .frequency_id = "locationchoicedatajp_terms_census_grid"
-  )
 }
 
 #' Tables of the grid square statistics of the Population Census
