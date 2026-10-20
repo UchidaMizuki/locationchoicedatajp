@@ -61,7 +61,7 @@ grid_city_get <- function(date, grid_size) {
   files <- grid_city_files()
   boundary_date <- grid_city_release_date(date, files)
   release <- files$release[files$boundary_date == boundary_date][[1]]
-  grid_city_inform_terms()
+  inform_terms("grid_city_get")
 
   data <- grid_city_get_archive(boundary_date, grid_size)
   dplyr::mutate(
@@ -110,20 +110,6 @@ grid_city_release_date <- function(date, files, call = rlang::caller_env()) {
     )
   }
   max(dates)
-}
-
-grid_city_inform_terms <- function() {
-  files <- ksjdata::ksj_available
-  file <- files[files$dataset_code == "N03", ][1, ]
-  cli::cli_inform(
-    c(
-      "Terms of use of {file$dataset_code} ({file$dataset_name}): {file$license_name}",
-      i = "{file$license_note}",
-      i = "{.url {file$license_url}}"
-    ),
-    .frequency = "once",
-    .frequency_id = "locationchoicedatajp_terms_n03"
-  )
 }
 
 #' Files of the crosswalk of grid squares to municipalities

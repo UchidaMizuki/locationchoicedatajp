@@ -13,7 +13,7 @@ test_that("prefectural_land_price_get() reads the sites with their terms", {
 
   expect_message(
     sites <- prefectural_land_price_get(2020),
-    "Terms of use of L02"
+    "都道府県地価調査データ"
   )
   expect_equal(sites, "sites 2020")
 })

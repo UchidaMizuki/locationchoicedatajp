@@ -4,6 +4,9 @@ template:
   bootstrap: 5
 
 reference:
+- title: Sources
+  contents:
+  - data_sources
 - title: Population Census
   contents:
   - census_city_centroid_get

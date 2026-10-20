@@ -49,7 +49,7 @@
 #' @export
 census_city_centroid_get <- function(year) {
   check_census_city_centroid_year(year)
-  census_city_centroid_inform_terms()
+  inform_terms("census_city_centroid_get")
   census_city_centroid_get_archive(year)
 }
 
@@ -77,17 +77,6 @@ check_census_city_centroid_year <- function(year, call = rlang::caller_env()) {
       call = call
     )
   }
-}
-
-census_city_centroid_inform_terms <- function() {
-  cli::cli_inform(
-    c(
-      "Terms of use of the Statistics Bureau: the Public Data License (Version 1.0), compatible with CC BY 4.0.",
-      i = "{.url https://www.stat.go.jp/info/riyou.html}"
-    ),
-    .frequency = "once",
-    .frequency_id = "locationchoicedatajp_terms_stat"
-  )
 }
 
 #' Files of the population centroids

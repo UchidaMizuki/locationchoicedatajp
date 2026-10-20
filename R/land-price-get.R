@@ -65,7 +65,7 @@
 #' @export
 land_price_get <- function(year) {
   check_land_price_year(year)
-  land_price_inform_terms()
+  inform_terms("land_price_get")
   land_price_get_archive(year)
 }
 
@@ -96,20 +96,6 @@ check_land_price_year <- function(
       call = call
     )
   }
-}
-
-land_price_inform_terms <- function(dataset_code = "L01") {
-  files <- ksjdata::ksj_available
-  file <- files[files$dataset_code == dataset_code, ][1, ]
-  cli::cli_inform(
-    c(
-      "Terms of use of {file$dataset_code} ({file$dataset_name}): {file$license_name}",
-      i = "{file$license_note}",
-      i = "{.url {file$license_url}}"
-    ),
-    .frequency = "once",
-    .frequency_id = paste0("locationchoicedatajp_terms_", dataset_code)
-  )
 }
 
 #' Files of the land prices
