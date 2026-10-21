@@ -22,6 +22,10 @@ reference:
   - grid_city_target
   - grid_code
   - grid_sizes
+- title: Zone attributes
+  contents:
+  - rail_station_get
+  - rail_station_target
 - title: Land prices
   contents:
   - land_price_get

@@ -106,3 +106,17 @@ fake_census_commuting_cells <- function() {
     "13102"           , "2"       , "03"        , "00000"                , "2"
   )
 }
+
+# Stations of a release before 2022, without codes and a coordinate reference
+# system.
+fake_rail_station_layer <- function(crs = sf::NA_crs_) {
+  data <- tibble::tibble(
+    N02_001 = "11",
+    N02_002 = "2",
+    N02_003 = "山手線",
+    N02_004 = "東日本旅客鉄道",
+    N02_005 = "東京"
+  )
+  line <- sf::st_linestring(rbind(c(139.766, 35.681), c(139.767, 35.682)))
+  sf::st_sf(data, geometry = sf::st_sfc(line, crs = crs))
+}

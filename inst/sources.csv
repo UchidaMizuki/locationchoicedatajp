@@ -6,3 +6,4 @@ grid_city_get,N03,国土数値情報（行政区域データ）,国土交通省,
 land_price_get,L01,国土数値情報（地価公示データ）,国土交通省,https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L01-2026.html,,,,「国土数値情報（地価公示データ）」（国土交通省）（https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L01-2026.html）を加工して作成
 land_price_grid_get,L01,国土数値情報（地価公示データ）,国土交通省,https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L01-2026.html,,,,「国土数値情報（地価公示データ）」（国土交通省）（https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L01-2026.html）を加工して作成
 prefectural_land_price_get,L02,国土数値情報（都道府県地価調査データ）,国土交通省,https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L02-2026.html,,,,「国土数値情報（都道府県地価調査データ）」（国土交通省）（https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L02-2026.html）を加工して作成
+rail_station_get,N02,国土数値情報（鉄道データ）,国土交通省,https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html,,,,「国土数値情報（鉄道データ）」（国土交通省）（https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html）を加工して作成

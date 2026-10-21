@@ -144,3 +144,12 @@ The representative points of municipalities, for distances and travel times (#8)
 - Municipalities without residents have no centroid, which the workbook marks with a note on their name; any other missing centroid is an error.
 - Checked for 2020: 1,916 rows (the 1,896 municipalities of the commuting flows except 双葉町, and 21 whole cities), and 1,887 of the 1,895 centroids of municipalities lie in a 1 km square of their own municipality; the others are of islands or coasts (小笠原村, 三島村, 十島村, ...).
 - Distances between centroids, or from grid squares (`grid_code()`, `jpgrid`), are computed from these points when a model needs them; travel times on networks are planned.
+
+### Railway stations (`rail_station_get()`)
+
+From 鉄道 (N02 of National Land Numerical Information, read with `ksjdata::ksj_get()`), one target per release (as of December 31 of its year) from 2006, except 2009 and 2010 (not published) and 2005 (its archive holds two versions of its layers). `inst/tarchives/rail-station/files.csv`, written by `data-raw/rail_station_files.R`, lists the layer of the stations of each release (`-g_Station` until 2008), its coordinate reference system, and its number of stations.
+
+- One row per station of a line, as published: a station served by several lines has a row for each. Stations are lines (the extent of their platforms); points and groups of stations are left to the model (`station_group_code`, published from 2022, groups the stations of the same name within 300 m).
+- The files until 2014 have no `.prj` file, and are set to JGD2000, the datum of the catalog, as for the other datasets; from 2015 they are in JGD2011.
+- The releases from 2021 hold their files in folders `Shift-JIS` and `UTF-8`, which ksjdata reads from its version that takes the copy in `UTF-8`.
+- Checked: all 18 releases build, with the recorded number of stations (10,220 to 10,373), and the codes of 2022 onward are complete.
