@@ -120,3 +120,38 @@ fake_rail_station_layer <- function(crs = sf::NA_crs_) {
   line <- sf::st_linestring(rbind(c(139.766, 35.681), c(139.767, 35.682)))
   sf::st_sf(data, geometry = sf::st_sfc(line, crs = crs))
 }
+
+# A school in the layout of the release of 2021, which stores some codes as
+# numbers and has no campus code.
+fake_school_layer <- function(crs = 6668) {
+  data <- tibble::tibble(
+    P29_001 = "13101",
+    P29_002 = "B113210100016",
+    P29_003 = 16001L,
+    P29_004 = "千代田区立麹町小学校",
+    P29_005 = "麹町2-8",
+    P29_006 = 3L,
+    P29_007 = 1L
+  )
+  point <- sf::st_point(c(139.74, 35.68))
+  sf::st_sf(data, geometry = sf::st_sfc(point, crs = crs))
+}
+
+# A hospital in the layout of the release of 2020, which stores the codes as
+# numbers.
+fake_medical_institution_layer <- function(crs = 6668) {
+  data <- tibble::tibble(
+    P04_001 = 1L,
+    P04_002 = "東京病院",
+    P04_003 = "東京都千代田区1-1",
+    P04_004 = "内　外",
+    P04_005 = NA_character_,
+    P04_006 = NA_character_,
+    P04_007 = 2L,
+    P04_008 = 100L,
+    P04_009 = 1L,
+    P04_010 = 9L
+  )
+  point <- sf::st_point(c(139.76, 35.69))
+  sf::st_sf(data, geometry = sf::st_sfc(point, crs = crs))
+}
