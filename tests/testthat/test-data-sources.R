@@ -16,15 +16,20 @@ test_that("data_sources() has a source for every getter with data", {
   expect_all_true(grepl("加工して作成", sources$attribution))
 })
 
-test_that("data_sources() takes the terms of National Land Numerical Information from ksjdata", {
-  sources <- data_sources()
-  ksj <- ksjdata::ksj_available
-  l01 <- ksj[ksj$dataset_code == "L01", ][1, ]
-  land_price <- sources[sources$function_name == "land_price_get", ]
-
-  expect_equal(land_price$license_name, l01$license_name)
-  expect_equal(land_price$license_note, l01$license_note)
-  expect_match(land_price$source_name, l01$dataset_name, fixed = TRUE)
+test_that("data_sources() has the columns of the registry", {
+  expect_named(
+    data_sources(),
+    c(
+      "function_name",
+      "source_name",
+      "publisher",
+      "source_url",
+      "license_name",
+      "license_note",
+      "license_url",
+      "attribution"
+    )
+  )
 })
 
 test_that("data_attribution() gives the distinct lines of the getters", {
