@@ -103,6 +103,14 @@ must say that they were processed.
 - [`grid_sizes()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_sizes.md)
   : Sizes of grid squares
 
+## Zone attributes
+
+- [`rail_station_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/rail_station_get.md)
+  : Get railway stations
+- [`rail_station_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/rail_station_target.md)
+  [`rail_station_target_raw()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/rail_station_target.md)
+  : Target of railway stations
+
 ## Land prices
 
 - [`land_price_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/land_price_get.md)

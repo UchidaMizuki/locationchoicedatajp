@@ -48,7 +48,7 @@ advice.
 
 ``` r
 data_sources()
-#> # A tibble: 7 × 8
+#> # A tibble: 8 × 8
 #>   function_name       source_name publisher source_url license_name license_note
 #>   <chr>               <chr>       <chr>     <chr>      <chr>        <chr>       
 #> 1 census_city_centro… 人口重心（国勢調査）… 総務省統計局…… https://w… 公共データ利用規約（第… CC BY 4.0互換…
@@ -58,6 +58,7 @@ data_sources()
 #> 5 land_price_get      国土数値情報（地価公… 国土交通省…… https://n… CC_BY_4.0    2019年（平成31年…
 #> 6 land_price_grid_get 国土数値情報（地価公… 国土交通省…… https://n… CC_BY_4.0    2019年（平成31年…
 #> 7 prefectural_land_p… 国土数値情報（都道府… 国土交通省…… https://n… CC_BY_4.0    2018年（平成30年…
+#> 8 rail_station_get    国土数値情報（鉄道デ… 国土交通省…… https://n… CC_BY_4.0    2020年（令和2年）…
 #> # ℹ 2 more variables: license_url <chr>, attribution <chr>
 
 data_attribution(c("land_price_get", "census_grid_get"))

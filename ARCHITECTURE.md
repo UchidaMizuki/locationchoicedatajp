@@ -384,3 +384,28 @@ are written (decimal degrees in 2020, DDDMMSS.ss in 2015).
   ([`grid_code()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_code.md),
   `jpgrid`), are computed from these points when a model needs them;
   travel times on networks are planned.
+
+### Railway stations (`rail_station_get()`)
+
+From 鉄道 (N02 of National Land Numerical Information, read with
+[`ksjdata::ksj_get()`](https://rdrr.io/pkg/ksjdata/man/ksj_get.html)),
+one target per release (as of December 31 of its year) from 2006, except
+2009 and 2010 (not published) and 2005 (its archive holds two versions
+of its layers). `inst/tarchives/rail-station/files.csv`, written by
+`data-raw/rail_station_files.R`, lists the layer of the stations of each
+release (`-g_Station` until 2008), its coordinate reference system, and
+its number of stations.
+
+- One row per station of a line, as published: a station served by
+  several lines has a row for each. Stations are lines (the extent of
+  their platforms); points and groups of stations are left to the model
+  (`station_group_code`, published from 2022, groups the stations of the
+  same name within 300 m).
+- The files until 2014 have no `.prj` file, and are set to JGD2000, the
+  datum of the catalog, as for the other datasets; from 2015 they are in
+  JGD2011.
+- The releases from 2021 hold their files in folders `Shift-JIS` and
+  `UTF-8`, which ksjdata reads from its version that takes the copy in
+  `UTF-8`.
+- Checked: all 18 releases build, with the recorded number of stations
+  (10,220 to 10,373), and the codes of 2022 onward are complete.

@@ -74,3 +74,10 @@
   [`prefectural_land_price_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/prefectural_land_price_target.md)
   declares them as a target
   ([\#9](https://github.com/UchidaMizuki/locationchoicedatajp/issues/9)).
+- [`rail_station_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/rail_station_get.md)
+  returns the railway stations of National Land Numerical Information
+  (鉄道, N02) for 2006 to 2008 and 2011 onward as `sf` lines, as
+  published, and
+  [`rail_station_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/rail_station_target.md)
+  declares them as a target
+  ([\#10](https://github.com/UchidaMizuki/locationchoicedatajp/issues/10)).
