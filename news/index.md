@@ -66,6 +66,13 @@
   [`land_price_grid_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/land_price_grid_target.md)
   declares it as a target
   ([\#9](https://github.com/UchidaMizuki/locationchoicedatajp/issues/9)).
+- [`medical_institution_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/medical_institution_get.md)
+  returns the hospitals, clinics, and dental clinics of National Land
+  Numerical Information (医療機関, P04) for 2020 as `sf` points, as
+  published, and
+  [`medical_institution_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/medical_institution_target.md)
+  declares them as a target
+  ([\#10](https://github.com/UchidaMizuki/locationchoicedatajp/issues/10)).
 - [`prefectural_land_price_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/prefectural_land_price_get.md)
   returns the sites of the prefectural land price survey
   (都道府県地価調査) with their location as an `sf` tibble for every
@@ -79,5 +86,11 @@
   (鉄道, N02) for 2006 to 2008 and 2011 onward as `sf` lines, as
   published, and
   [`rail_station_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/rail_station_target.md)
+  declares them as a target
+  ([\#10](https://github.com/UchidaMizuki/locationchoicedatajp/issues/10)).
+- [`school_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/school_get.md)
+  returns the schools of National Land Numerical Information (学校, P29)
+  for 2021 and 2023 as `sf` points, as published, and
+  [`school_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/school_target.md)
   declares them as a target
   ([\#10](https://github.com/UchidaMizuki/locationchoicedatajp/issues/10)).

@@ -41,11 +41,21 @@
 
 ## Zone attributes
 
+- [`medical_institution_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/medical_institution_get.md)
+  : Get medical institutions
+- [`medical_institution_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/medical_institution_target.md)
+  [`medical_institution_target_raw()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/medical_institution_target.md)
+  : Target of medical institutions
 - [`rail_station_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/rail_station_get.md)
   : Get railway stations
 - [`rail_station_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/rail_station_target.md)
   [`rail_station_target_raw()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/rail_station_target.md)
   : Target of railway stations
+- [`school_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/school_get.md)
+  : Get schools
+- [`school_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/school_target.md)
+  [`school_target_raw()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/school_target.md)
+  : Target of schools
 
 ## Land prices
 
