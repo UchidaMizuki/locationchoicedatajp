@@ -153,3 +153,20 @@ From 鉄道 (N02 of National Land Numerical Information, read with `ksjdata::ksj
 - The files until 2014 have no `.prj` file, and are set to JGD2000, the datum of the catalog, as for the other datasets; from 2015 they are in JGD2011.
 - The releases from 2021 hold their files in folders `Shift-JIS` and `UTF-8`, which ksjdata reads from its version that takes the copy in `UTF-8`.
 - Checked: all 18 releases build, with the recorded number of stations (10,220 to 10,373), and the codes of 2022 onward are complete.
+
+### Schools (`school_get()`)
+
+From 学校 (P29 of National Land Numerical Information, read with `ksjdata::ksj_get()`), one target per release from its national file. `inst/tarchives/school/files.csv`, written by `data-raw/school_files.R`, lists the layer of each release, its coordinate reference system, and its number of schools.
+
+- The release of 2013 may not be used commercially (非商用), unlike those of 2021 and 2023 (CC BY 4.0), and is left out. Its columns also differ (公共施設大分類 and 小分類 before 学校分類).
+- One row per site, as published, with the codes as character (the file of 2021 stores some as numbers). 休校区分 has a code `9` that is not in its code list (429 sites in 2021, 202 in 2023); it is kept. キャンパスコード and 学校名備考 are published from 2023.
+- 行政区域コード is published as it is: the release of 2021 codes designated cities as whole cities (the 20 codes such as `14100`, 10,354 sites), and that of 2023 codes their wards, as N03.
+- Checked: both releases build with the recorded number of schools (57,230 and 56,807), and every code of 学校分類 and 管理者 is in its code list. In 2023, a school and its campus identify a row, and all sites lie in a 1 km square of their own municipality in the crosswalk of 2023-01-01; in 2021, 46,860 of the 46,876 sites outside designated cities do (crosswalk of 2021-01-01).
+
+### Medical institutions (`medical_institution_get()`)
+
+From 医療機関 (P04 of National Land Numerical Information, read with `ksjdata::ksj_get()`), one target per release from its national file. `inst/tarchives/medical-institution/files.csv`, written by `data-raw/medical_institution_files.R`, lists the layer of each release, its coordinate reference system, and its number of institutions.
+
+- The releases of 2010 and 2014 may not be used commercially (非商用), as stated on their pages, and are left out. ksjdata records the terms of the latest page (CC BY 4.0) for the whole dataset, so it does not warn about them.
+- One row per institution, as published. The specialties (診療科目) are kept in the three columns of the file, which split them where they are too long for one column.
+- Checked: the release of 2020 builds with the recorded number of institutions, and every code is in its code list. It has 8,269 hospitals with 1,511,286 beds, 104,183 clinics, and 68,860 dental clinics, close to the 医療施設調査 of 2020-10-01 (8,238 hospitals with 1,507,526 beds, 102,612 clinics, and 67,874 dental clinics), as it also includes dormant institutions.

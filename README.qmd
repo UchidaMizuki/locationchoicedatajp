@@ -31,6 +31,9 @@ Residential location is modelled on grid squares (1 km, 500 m, or 250 m), and wo
 | `grid_city_get()` | Land area and share of each grid square in each municipality | 2007– |
 | `land_price_get()`, `prefectural_land_price_get()` | Sites of 地価公示 and 都道府県地価調査 | 2007–, 2006– |
 | `land_price_grid_get()` | Land prices summarised by grid square | 2007– |
+| `rail_station_get()` | Railway stations (国土数値情報 N02) | 2006–2008, 2011– |
+| `school_get()` | Schools (国土数値情報 P29) | 2021, 2023 |
+| `medical_institution_get()` | Hospitals, clinics, and dental clinics (国土数値情報 P04) | 2020 |
 
 Most tables are built on their first call, which downloads them; `census_commuting_get()` needs an e-Stat API key in `ESTAT_API_KEY`. The package is at an early stage: see the [roadmap](https://github.com/UchidaMizuki/locationchoicedatajp/issues/1).
 

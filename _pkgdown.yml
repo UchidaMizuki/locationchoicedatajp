@@ -24,8 +24,12 @@ reference:
   - grid_sizes
 - title: Zone attributes
   contents:
+  - medical_institution_get
+  - medical_institution_target
   - rail_station_get
   - rail_station_target
+  - school_get
+  - school_target
 - title: Land prices
   contents:
   - land_price_get
