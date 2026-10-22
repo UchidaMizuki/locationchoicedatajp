@@ -174,9 +174,15 @@ terms, and a line of attribution, from `inst/sources.csv`.
 [`data_attribution()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/data_sources.md)
 gives the lines of the getters used.
 
-- The terms of National Land Numerical Information are taken from
-  ksjdata at run time, so they follow its catalog (they differ by
-  release for L01 and L02); their names and lines of attribution are in
+- The terms of National Land Numerical Information are set for each
+  release, on the page of its version, and ksjdata does not record them
+  (a label of the whole dataset was wrong for older releases, such as
+  非商用 for P04 of 2010 and 2014 while the dataset is labeled CC BY
+  4.0). So the registry records, for each getter, the terms of the
+  releases it uses, as stated on the pages of the dataset (for example,
+  L01 is CC BY 4.0 from 2019 and 商用可 before), checked when a getter
+  or a release is added. Releases that cannot be used commercially
+  (非商用) are not used. Names, terms, and lines of attribution are in
   the CSV, as code in `R/` holds Japanese only as escapes.
 - Every getter shows the terms of its source once per session
   (`inform_terms()`), from the registry, and documents them under
@@ -446,9 +452,8 @@ one target per release from its national file.
 its coordinate reference system, and its number of institutions.
 
 - The releases of 2010 and 2014 may not be used commercially (非商用),
-  as stated on their pages, and are left out. ksjdata records the terms
-  of the latest page (CC BY 4.0) for the whole dataset, so it does not
-  warn about them.
+  as stated on their pages, and are left out. The page of the latest
+  version labels the whole dataset CC BY 4.0 without saying so.
 - One row per institution, as published. The specialties (診療科目) are
   kept in the three columns of the file, which split them where they are
   too long for one column.

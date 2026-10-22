@@ -31,7 +31,9 @@
   declares them as a target
   ([\#7](https://github.com/UchidaMizuki/locationchoicedatajp/issues/7)).
 - [`data_sources()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/data_sources.md)
-  lists the source, publisher, and terms of use of every getter, and
+  lists the source, publisher, and terms of use of every getter (for
+  National Land Numerical Information, the terms of the releases it
+  uses, which differ by release), and
   [`data_attribution()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/data_sources.md)
   gives the lines to credit the sources of the getters used; every
   getter shows its terms from this registry
