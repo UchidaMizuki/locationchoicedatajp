@@ -145,6 +145,15 @@ The representative points of municipalities, for distances and travel times (#8)
 - Checked for 2020: 1,916 rows (the 1,896 municipalities of the commuting flows except 双葉町, and 21 whole cities), and 1,887 of the 1,895 centroids of municipalities lie in a 1 km square of their own municipality; the others are of islands or coasts (小笠原村, 三島村, 十島村, ...).
 - Distances between centroids, or from grid squares (`grid_code()`, `jpgrid`), are computed from these points when a model needs them; travel times on networks are planned.
 
+### Railway lines (`rail_line_get()`)
+
+From the sections of lines (`_RailroadSection`) of the same files as the stations, one target per release. `inst/tarchives/rail-line/files.csv`, written by `data-raw/rail_line_files.R`, lists their layer, coordinate reference system, and number of sections.
+
+- One row per section, as published, with 鉄道区分, 事業者種別, 路線名, and 運営会社. The coordinate reference systems are those of the stations.
+- The files until 2008 also have `N02_000`, an identifier of the feature in the GML (`eb02_1`, ...) that is not in the specification; it is dropped, as for the stations.
+- A track shared by several lines is published as a section for each line (950 sections in 2020 have the geometry of another section), so lengths summed over sections count it once per line.
+- Checked: all 18 releases build with the recorded number of sections (21,916 to 22,127), and every code of 鉄道区分 and 事業者種別 is in its code list. The sections of 2020 sum to 27,862 km (2,772 km of Shinkansen and 17,158 km of other JR lines). All releases take 2.5 minutes on their first call.
+
 ### Railway stations (`rail_station_get()`)
 
 From 鉄道 (N02 of National Land Numerical Information, read with `ksjdata::ksj_get()`), one target per release (as of December 31 of its year) from 2006, except 2009 and 2010 (not published) and 2005 (its archive holds two versions of its layers). `inst/tarchives/rail-station/files.csv`, written by `data-raw/rail_station_files.R`, lists the layer of the stations of each release (`-g_Station` until 2008), its coordinate reference system, and its number of stations.

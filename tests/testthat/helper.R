@@ -155,3 +155,26 @@ fake_medical_institution_layer <- function(crs = 6668) {
   point <- sf::st_point(c(139.76, 35.69))
   sf::st_sf(data, geometry = sf::st_sfc(point, crs = crs))
 }
+
+# A section of a line in the layout of a release until 2014, without a
+# coordinate reference system.
+fake_rail_line_layer <- function(crs = sf::NA_crs_) {
+  data <- tibble::tibble(
+    N02_001 = "11",
+    N02_002 = "2",
+    N02_003 = "山手線",
+    N02_004 = "東日本旅客鉄道"
+  )
+  line <- sf::st_linestring(rbind(c(139.766, 35.681), c(139.770, 35.690)))
+  sf::st_sf(data, geometry = sf::st_sfc(line, crs = crs))
+}
+
+# Shows the terms of the source of a getter again, as they are shown once per
+# session and source, and getters can share a source.
+reset_terms <- function(function_name) {
+  sources <- data_sources()
+  source_name <- sources$source_name[sources$function_name == function_name]
+  rlang::reset_message_verbosity(
+    paste0("locationchoicedatajp_terms_", source_name)
+  )
+}
