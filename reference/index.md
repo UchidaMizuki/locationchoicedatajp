@@ -46,6 +46,11 @@
 - [`medical_institution_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/medical_institution_target.md)
   [`medical_institution_target_raw()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/medical_institution_target.md)
   : Target of medical institutions
+- [`rail_line_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/rail_line_get.md)
+  : Get railway lines
+- [`rail_line_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/rail_line_target.md)
+  [`rail_line_target_raw()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/rail_line_target.md)
+  : Target of railway lines
 - [`rail_station_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/rail_station_get.md)
   : Get railway stations
 - [`rail_station_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/rail_station_target.md)

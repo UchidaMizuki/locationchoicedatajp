@@ -25,6 +25,7 @@ has a reference year (`year`) and the release it is taken from
 | [`grid_city_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/grid_city_get.md) | Land area and share of each grid square in each municipality | 2007– |
 | [`land_price_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/land_price_get.md), [`prefectural_land_price_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/prefectural_land_price_get.md) | Sites of 地価公示 and 都道府県地価調査 | 2007–, 2006– |
 | [`land_price_grid_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/land_price_grid_get.md) | Land prices summarised by grid square | 2007– |
+| [`rail_line_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/rail_line_get.md) | Railway lines (国土数値情報 N02) | 2006–2008, 2011– |
 | [`rail_station_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/rail_station_get.md) | Railway stations (国土数値情報 N02) | 2006–2008, 2011– |
 | [`school_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/school_get.md) | Schools (国土数値情報 P29) | 2021, 2023 |
 | [`medical_institution_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/medical_institution_get.md) | Hospitals, clinics, and dental clinics (国土数値情報 P04) | 2020 |

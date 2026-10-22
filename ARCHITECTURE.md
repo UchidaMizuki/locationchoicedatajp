@@ -391,6 +391,28 @@ are written (decimal degrees in 2020, DDDMMSS.ss in 2015).
   `jpgrid`), are computed from these points when a model needs them;
   travel times on networks are planned.
 
+### Railway lines (`rail_line_get()`)
+
+From the sections of lines (`_RailroadSection`) of the same files as the
+stations, one target per release. `inst/tarchives/rail-line/files.csv`,
+written by `data-raw/rail_line_files.R`, lists their layer, coordinate
+reference system, and number of sections.
+
+- One row per section, as published, with 鉄道区分, 事業者種別, 路線名,
+  and 運営会社. The coordinate reference systems are those of the
+  stations.
+- The files until 2008 also have `N02_000`, an identifier of the feature
+  in the GML (`eb02_1`, …) that is not in the specification; it is
+  dropped, as for the stations.
+- A track shared by several lines is published as a section for each
+  line (950 sections in 2020 have the geometry of another section), so
+  lengths summed over sections count it once per line.
+- Checked: all 18 releases build with the recorded number of sections
+  (21,916 to 22,127), and every code of 鉄道区分 and 事業者種別 is in
+  its code list. The sections of 2020 sum to 27,862 km (2,772 km of
+  Shinkansen and 17,158 km of other JR lines). All releases take 2.5
+  minutes on their first call.
+
 ### Railway stations (`rail_station_get()`)
 
 From 鉄道 (N02 of National Land Numerical Information, read with

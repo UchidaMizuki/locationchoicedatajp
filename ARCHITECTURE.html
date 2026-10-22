@@ -198,6 +198,14 @@
 <li>Distances between centroids, or from grid squares (<code><a href="reference/grid_code.html">grid_code()</a></code>, <code>jpgrid</code>), are computed from these points when a model needs them; travel times on networks are planned.</li>
 </ul></div>
 <div class="section level3">
+<h3 id="railway-lines-rail_line_get">Railway lines (<code>rail_line_get()</code>)<a class="anchor" aria-label="anchor" href="#railway-lines-rail_line_get"></a></h3>
+<p>From the sections of lines (<code>_RailroadSection</code>) of the same files as the stations, one target per release. <code>inst/tarchives/rail-line/files.csv</code>, written by <code>data-raw/rail_line_files.R</code>, lists their layer, coordinate reference system, and number of sections.</p>
+<ul><li>One row per section, as published, with 鉄道区分, 事業者種別, 路線名, and 運営会社. The coordinate reference systems are those of the stations.</li>
+<li>The files until 2008 also have <code>N02_000</code>, an identifier of the feature in the GML (<code>eb02_1</code>, …) that is not in the specification; it is dropped, as for the stations.</li>
+<li>A track shared by several lines is published as a section for each line (950 sections in 2020 have the geometry of another section), so lengths summed over sections count it once per line.</li>
+<li>Checked: all 18 releases build with the recorded number of sections (21,916 to 22,127), and every code of 鉄道区分 and 事業者種別 is in its code list. The sections of 2020 sum to 27,862 km (2,772 km of Shinkansen and 17,158 km of other JR lines). All releases take 2.5 minutes on their first call.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="railway-stations-rail_station_get">Railway stations (<code>rail_station_get()</code>)<a class="anchor" aria-label="anchor" href="#railway-stations-rail_station_get"></a></h3>
 <p>From 鉄道 (N02 of National Land Numerical Information, read with <code><a href="https://rdrr.io/pkg/ksjdata/man/ksj_get.html" class="external-link">ksjdata::ksj_get()</a></code>), one target per release (as of December 31 of its year) from 2006, except 2009 and 2010 (not published) and 2005 (its archive holds two versions of its layers). <code>inst/tarchives/rail-station/files.csv</code>, written by <code>data-raw/rail_station_files.R</code>, lists the layer of the stations of each release (<code>-g_Station</code> until 2008), its coordinate reference system, and its number of stations.</p>
 <ul><li>One row per station of a line, as published: a station served by several lines has a row for each. Stations are lines (the extent of their platforms); points and groups of stations are left to the model (<code>station_group_code</code>, published from 2022, groups the stations of the same name within 300 m).</li>
