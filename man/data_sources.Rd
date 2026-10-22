@@ -28,10 +28,11 @@ row per getter, with its publisher, terms of use, and a line of attribution.
 credit the sources in publications.
 }
 \details{
-The terms of National Land Numerical Information are those of ksjdata
-(\link[ksjdata:ksj_available]{ksjdata::ksj_available}), so they follow its catalog; they differ by
-release for some datasets (for example, 地価公示 is CC BY 4.0 from 2019 and
-商用可 before). The terms of e-Stat and of the Statistics Bureau are
+The terms of National Land Numerical Information are set for each release,
+so \code{license_note} gives those of the releases that the getter uses, as
+stated on the pages of the dataset: for example, 地価公示 is CC BY 4.0 from
+2019 and 商用可 before. Releases that cannot be used commercially (非商用)
+are not used. The terms of e-Stat and of the Statistics Bureau are
 compatible with CC BY 4.0.
 
 Every source asks for credit, and data that are processed must say so. The

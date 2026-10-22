@@ -79,7 +79,7 @@ Known limits of grid squares, and how they are handled:
 
 `data_sources()` is the registry of sources: one row per getter, with its publisher, terms, and a line of attribution, from `inst/sources.csv`. `data_attribution()` gives the lines of the getters used.
 
-- The terms of National Land Numerical Information are taken from ksjdata at run time, so they follow its catalog (they differ by release for L01 and L02); their names and lines of attribution are in the CSV, as code in `R/` holds Japanese only as escapes.
+- The terms of National Land Numerical Information are set for each release, on the page of its version, and ksjdata does not record them (a label of the whole dataset was wrong for older releases, such as 非商用 for P04 of 2010 and 2014 while the dataset is labeled CC BY 4.0). So the registry records, for each getter, the terms of the releases it uses, as stated on the pages of the dataset (for example, L01 is CC BY 4.0 from 2019 and 商用可 before), checked when a getter or a release is added. Releases that cannot be used commercially (非商用) are not used. Names, terms, and lines of attribution are in the CSV, as code in `R/` holds Japanese only as escapes.
 - Every getter shows the terms of its source once per session (`inform_terms()`), from the registry, and documents them under `@source`.
 - The lines say that the data were processed (加工して作成), as every source asks, since the tables are reshaped, renamed, and converted. Their form follows each publisher: 「国土数値情報（…）」（国土交通省）, 政府統計の総合窓口(e-Stat), and 総務省統計局ホームページ.
 
@@ -167,6 +167,6 @@ From 学校 (P29 of National Land Numerical Information, read with `ksjdata::ksj
 
 From 医療機関 (P04 of National Land Numerical Information, read with `ksjdata::ksj_get()`), one target per release from its national file. `inst/tarchives/medical-institution/files.csv`, written by `data-raw/medical_institution_files.R`, lists the layer of each release, its coordinate reference system, and its number of institutions.
 
-- The releases of 2010 and 2014 may not be used commercially (非商用), as stated on their pages, and are left out. ksjdata records the terms of the latest page (CC BY 4.0) for the whole dataset, so it does not warn about them.
+- The releases of 2010 and 2014 may not be used commercially (非商用), as stated on their pages, and are left out. The page of the latest version labels the whole dataset CC BY 4.0 without saying so.
 - One row per institution, as published. The specialties (診療科目) are kept in the three columns of the file, which split them where they are too long for one column.
 - Checked: the release of 2020 builds with the recorded number of institutions, and every code is in its code list. It has 8,269 hospitals with 1,511,286 beds, 104,183 clinics, and 68,860 dental clinics, close to the 医療施設調査 of 2020-10-01 (8,238 hospitals with 1,507,526 beds, 102,612 clinics, and 67,874 dental clinics), as it also includes dormant institutions.

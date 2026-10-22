@@ -5,10 +5,11 @@
 #' `data_attribution()` gives the lines of attribution of the getters used, to
 #' credit the sources in publications.
 #'
-#' The terms of National Land Numerical Information are those of ksjdata
-#' ([ksjdata::ksj_available]), so they follow its catalog; they differ by
-#' release for some datasets (for example, 地価公示 is CC BY 4.0 from 2019 and
-#' 商用可 before). The terms of e-Stat and of the Statistics Bureau are
+#' The terms of National Land Numerical Information are set for each release,
+#' so `license_note` gives those of the releases that the getter uses, as
+#' stated on the pages of the dataset: for example, 地価公示 is CC BY 4.0 from
+#' 2019 and 商用可 before. Releases that cannot be used commercially (非商用)
+#' are not used. The terms of e-Stat and of the Statistics Bureau are
 #' compatible with CC BY 4.0.
 #'
 #' Every source asks for credit, and data that are processed must say so. The
@@ -39,25 +40,7 @@ data_sources <- function() {
     na.strings = "",
     encoding = "UTF-8"
   )
-
-  ksj <- ksjdata::ksj_available
-  ksj <- ksj[!duplicated(ksj$dataset_code), ]
-  i <- match(sources$ksj_dataset_code, ksj$dataset_code)
-  is_ksj <- !is.na(i)
-  for (column in c("license_name", "license_note", "license_url")) {
-    sources[[column]][is_ksj] <- ksj[[column]][i[is_ksj]]
-  }
-
-  tibble::as_tibble(sources[c(
-    "function_name",
-    "source_name",
-    "publisher",
-    "source_url",
-    "license_name",
-    "license_note",
-    "license_url",
-    "attribution"
-  )])
+  tibble::as_tibble(sources)
 }
 
 #' @rdname data_sources
