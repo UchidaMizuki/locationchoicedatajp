@@ -8,6 +8,7 @@ test_that("rail_station_files() has a station layer per year", {
 })
 
 test_that("rail_station_get() reads the stations with their terms", {
+  reset_terms("rail_station_get")
   local_mocked_bindings(rail_station_get_archive = \(year) {
     paste("stations", year)
   })
