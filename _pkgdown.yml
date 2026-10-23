@@ -26,6 +26,8 @@ reference:
   contents:
   - medical_institution_get
   - medical_institution_target
+  - public_facility_get
+  - public_facility_target
   - rail_line_get
   - rail_line_target
   - rail_station_get
