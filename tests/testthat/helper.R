@@ -178,3 +178,15 @@ reset_terms <- function(function_name) {
     paste0("locationchoicedatajp_terms_", source_name)
   )
 }
+
+# A municipal office in the layout of the release of 2022.
+fake_public_facility_layer <- function(crs = 6668) {
+  data <- tibble::tibble(
+    P05_001 = "13101",
+    P05_002 = "1",
+    P05_003 = "千代田区役所",
+    P05_004 = "九段南1-2-1"
+  )
+  point <- sf::st_point(c(139.75, 35.69))
+  sf::st_sf(data, geometry = sf::st_sfc(point, crs = crs))
+}
