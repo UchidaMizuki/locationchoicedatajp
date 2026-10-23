@@ -83,6 +83,13 @@
   [`prefectural_land_price_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/prefectural_land_price_target.md)
   declares them as a target
   ([\#9](https://github.com/UchidaMizuki/locationchoicedatajp/issues/9)).
+- [`public_facility_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/public_facility_get.md)
+  returns the municipal offices and public meeting facilities of
+  National Land Numerical Information (市町村役場等及び公的集会施設,
+  P05) for 2022 as `sf` points, as published, and
+  [`public_facility_target()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/public_facility_target.md)
+  declares them as a target
+  ([\#10](https://github.com/UchidaMizuki/locationchoicedatajp/issues/10)).
 - [`rail_line_get()`](https://uchidamizuki.github.io/locationchoicedatajp/reference/rail_line_get.md)
   returns the railway lines of National Land Numerical Information
   (鉄道, N02) for 2006 to 2008 and 2011 onward as `sf` lines, one row

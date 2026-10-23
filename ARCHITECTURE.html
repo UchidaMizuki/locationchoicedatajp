@@ -228,6 +228,14 @@
 <li>One row per institution, as published. The specialties (診療科目) are kept in the three columns of the file, which split them where they are too long for one column.</li>
 <li>Checked: the release of 2020 builds with the recorded number of institutions, and every code is in its code list. It has 8,269 hospitals with 1,511,286 beds, 104,183 clinics, and 68,860 dental clinics, close to the 医療施設調査 of 2020-10-01 (8,238 hospitals with 1,507,526 beds, 102,612 clinics, and 67,874 dental clinics), as it also includes dormant institutions.</li>
 </ul></div>
+<div class="section level3">
+<h3 id="municipal-offices-and-public-meeting-facilities-public_facility_get">Municipal offices and public meeting facilities (<code>public_facility_get()</code>)<a class="anchor" aria-label="anchor" href="#municipal-offices-and-public-meeting-facilities-public_facility_get"></a></h3>
+<p>From 市町村役場等及び公的集会施設 (P05 of National Land Numerical Information, read with <code><a href="https://rdrr.io/pkg/ksjdata/man/ksj_get.html" class="external-link">ksjdata::ksj_get()</a></code>), one target per release from its national file, which is an archive of the archives of the prefectures (read by ksjdata since UchidaMizuki/ksjdata#4). <code>inst/tarchives/public-facility/files.csv</code>, written by <code>data-raw/public_facility_files.R</code>, lists the prefix of its 47 layers, its coordinate reference system, and its number of facilities.</p>
+<ul><li>The release of 2010 may not be used commercially (非商用) and is left out; 2022 is CC BY 4.0.</li>
+<li>The layers of the prefectures have the same columns and coordinate reference system, checked by the script, so they are bound into one table, one row per facility, as published.</li>
+<li>The offices (本庁, 1,908) include those of the wards of designated cities; the office of a designated city has the code of the ward it is in (札幌市役所 is in 01101), so they have 1,880 distinct codes. A few offices have the code of another municipality as published (石狩市役所 has 01637, 芽室町), and 23 municipalities and wards of the crosswalk of 2022-01-01 have no office, among them the six villages of the Northern Territories.</li>
+<li>Checked for 2022: 79,532 facilities as recorded, every code is in the crosswalk of 2022-01-01, and 79,497 lie in a 1 km square of their own municipality. The table takes 32 seconds on its first call.</li>
+</ul></div>
 </div>
 </div>
 
